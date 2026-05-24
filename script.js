@@ -43,12 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// ================================================================
+//  ③ HELPER — GET AMOUNT IN CENTS (Mobile & Desktop Proof)
+// ================================================================
 function getAmountCents() {
   const el = document.getElementById('payTotalVal');
-  if (!el || !el.textContent) return 89900; 
-  const raw = el.textContent.replace(/[^0-9]/g, '');
-  const parsed = parseInt(raw, 10);
-  return isNaN(parsed) ? 89900 : parsed * 100;
+  if (!el) return 89900; // Fallback $899 if element isn't found
+  
+  // 1. Get raw text safely across desktop and mobile architectures
+  let text = el.textContent || el.innerText || '';
+  text = text.trim();
+  
+  // 2. Clear out everything except raw digits (strips $, commas, and invisible layout markers)
+  const rawDigits = text.replace(/[^0-9]/g, '');
+  
+  // 3. Convert to a base-10 number safely
+  const parsed = parseInt(rawDigits, 10);
+  
+  // 4. Return total or fallback securely if parsing failed
+  if (isNaN(parsed) || parsed === 0) {
+    return 89900; 
+  }
+  
+  return parsed * 100;
 }
 
 async function executePayment() {
