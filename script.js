@@ -4,6 +4,11 @@
 
 const stripe = Stripe('pk_test_51TaNh049qpQ3ycd9iUMTSPQYmwQmQcy6qd1UlmwBgUycHqZGZzmvChEHFpgfJN85iaPiMwbkzPh6eaC6oJx0nk2n00wU7qf17a');
 const elements = stripe.elements();
+const intentRes = await fetch('/api/create-payment-intent', { ... });
+console.log('API response status:', intentRes.status);
+const intentData = await intentRes.json();
+console.log('API response data:', intentData);
+
 
 // Add right after const cardElement = elements.create('card', { ... });
 console.log('✅ Stripe initialized');
