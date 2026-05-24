@@ -5,6 +5,31 @@
 const stripe = Stripe('pk_test_51TaNh049qpQ3ycd9iUMTSPQYmwQmQcy6qd1UlmwBgUycHqZGZzmvChEHFpgfJN85iaPiMwbkzPh6eaC6oJx0nk2n00wU7qf17a');
 const elements = stripe.elements();
 
+// Add right after const cardElement = elements.create('card', { ... });
+console.log('✅ Stripe initialized');
+
+// Add inside DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded');
+  const mountTarget = document.getElementById('stripe-card-element');
+  console.log('Mount target found:', !!mountTarget);
+  console.log('Mount target innerHTML:', mountTarget?.innerHTML);
+  
+  if (mountTarget) {
+    // Clear any placeholder content first
+    mountTarget.innerHTML = '';
+    cardElement.mount('#stripe-card-element');
+    console.log('✅ Card element mounted');
+  } else {
+    console.error('❌ stripe-card-element div NOT found in DOM');
+  }
+});
+
+// Add at the top of executePayment()
+async function executePayment() {
+  console.log('🔥 executePayment called');
+  console.log('Amount cents:', getAmountCents());
+  // ... rest of function
 // Card element — Stripe renders the secure card input
 const cardElement = elements.create('card', {
   style: {
