@@ -493,7 +493,7 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 
 <style>
   /* ═══════════════════════════════════
-     PAYMENT PAGE STYLES
+      PAYMENT PAGE STYLES
   ═══════════════════════════════════ */
   #pg-payment{background:var(--g50);padding:88px 24px 80px;min-height:100%}
   .pay-wrap{max-width:960px;margin:0 auto}
@@ -515,7 +515,7 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
   .pay-notice{font-family:var(--fL);font-size:12px;color:var(--g400);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
   .pay-submit{width:100%;font-family:var(--fD);font-weight:700;font-size:17px;color:var(--white);background:var(--black);border:none;padding:18px;border-radius:14px;cursor:pointer;transition:all 0.28s cubic-bezier(.34,1.56,.64,1);letter-spacing:-0.01em;margin-top:8px}
   .pay-submit:hover{background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
-  
+   
   /* Order Summary */
   .pay-summary{background:var(--white);border-radius:22px;padding:32px;border:1px solid var(--g200);position:sticky;top:82px}
   .pay-sum-title{font-family:var(--fD);font-weight:700;font-size:18px;letter-spacing:-0.03em;color:var(--black);margin-bottom:24px}
@@ -533,7 +533,7 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
   .pay-guarantee{display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px;margin-top:20px}
   .pay-guarantee-icon{font-size:22px;flex-shrink:0}
   .pay-guarantee-txt{font-family:var(--fL);font-size:12px;color:var(--g600);line-height:1.5}
-  
+   
   .pay-success{display:none;text-align:center;padding:60px 24px;max-width:520px;margin:0 auto}
   .pay-success.show{display:block}
   .pay-success-icon{font-size:64px;display:block;margin-bottom:24px;animation:successPop 0.6s cubic-bezier(.22,1,.56,1) forwards}
@@ -579,7 +579,7 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
           </div>
 
           <div class="pay-notice" style="margin-top:32px">🔒 Payments are encrypted and secure</div>
-          
+           
           <button class="pay-submit" id="paySubmitBtn" onclick="executePaymentRedirect()">Complete Purchase →</button>
         </div>
 
@@ -617,55 +617,59 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 <script src="script.js"></script>
 
 <script>
-  // 1. Initialize Stripe (Paste your real Publishable Key 'pk_live_...' inside the quotes)
+  // 1. Initialize Stripe Test Credentials
   const stripe = Stripe('pk_test_51TaNhEKivGT2h1qLK9ejfkmHEnhWdZD7c7In6i3Njns5IIYJZtPG2paDvDhoIqv2rqZDd3LiEb7hGuJpRWt3snc8009jpbAwsB');
 
   function executePaymentRedirect() {
     const planName = document.getElementById('payPlanName').innerText.trim().toLowerCase();
     let lineItems = [];
+    let containsSubscription = false;
 
     // 2. MAP MAIN SERVICE PLANS (One-Time)
+    // CRITICAL UPDATE: Paste your Stripe Price IDs here (They start with price_ , NOT prod_ !)
     if (planName.includes('start')) {
-      lineItems.push({ price: 'prod_UZWvs7fkrxhhjt', quantity: 1 });
+      lineItems.push({ price: 'price_STARTER_PRICE_ID', quantity: 1 });
     } else if (planName.includes('premium') || planName.includes('prem')) {
-      lineItems.push({ price: 'prod_UZX4yek64HcGSG', quantity: 1 });
+      lineItems.push({ price: 'price_PREMIUM_PRICE_ID', quantity: 1 });
     } else if (planName.includes('pro')) {
-      lineItems.push({ price: 'prod_UZWytm8jMKotrd', quantity: 1 });
+      lineItems.push({ price: 'price_PRO_PRICE_ID', quantity: 1 });
     }
 
-    // 3. MAP ONE-TIME FEATURES (Checks if your HTML checkboxes/toggles are active)
-    // Make sure these match the exact element 'id="..."' values on your toggle switches!
-    const addOnLead    = document.getElementById('toggle-lead-qualifier')?.checked;
-    const addOnPopups  = document.getElementById('toggle-smart-popups')?.checked;
-    const addOnSeo     = document.getElementById('toggle-local-seo')?.checked;
-    const addOnReview  = document.getElementById('toggle-review-system')?.checked;
+    // 3. READ SELECTIONS FROM LOCALSTORAGE
+    // Dynamically captures checked additions forwarded from the index page selections
+    const savedAddons = JSON.parse(localStorage.getItem('selectedAddons')) || [];
+    const savedUpkeep = localStorage.getItem('selectedUpkeep') || 'none';
 
-    if (addOnLead)   { lineItems.push({ price: 'price_ADDON_LEAD_ID', quantity: 1 }); }
-    if (addOnPopups) { lineItems.push({ price: 'price_ADDON_POPUPS_ID', quantity: 1 }); }
-    if (addOnSeo)    { lineItems.push({ price: 'price_ADDON_SEO_ID', quantity: 1 }); }
-    if (addOnReview) { lineItems.push({ price: 'price_ADDON_REVIEW_ID', quantity: 1 }); }
+    // Loop through and assign accurate addon Price IDs
+    savedAddons.forEach(addon => {
+      if (addon === 'lead')   lineItems.push({ price: 'price_ADDON_LEAD_PRICE_ID', quantity: 1 });
+      if (addon === 'popups') lineItems.push({ price: 'price_ADDON_POPUPS_PRICE_ID', quantity: 1 });
+      if (addon === 'seo')    lineItems.push({ price: 'price_ADDON_SEO_PRICE_ID', quantity: 1 });
+      if (addon === 'review') lineItems.push({ price: 'price_ADDON_REVIEW_PRICE_ID', quantity: 1 });
+    });
 
-    // 4. MAP MONTHLY UPKEEP SUBSCRIPTIONS
-    const upkeepPlan = getSelectedUpkeepPlan(); 
-
-    if (upkeepPlan === 'basic') {
-      lineItems.push({ price: 'price_UPKEEP_BASIC_ID', quantity: 1 });
-    } else if (upkeepPlan === 'pro') {
-      lineItems.push({ price: 'price_UPKEEP_PRO_ID', quantity: 1 });
-    } else if (upkeepPlan === 'premium') {
-      lineItems.push({ price: 'price_UPKEEP_PREMIUM_ID', quantity: 1 });
+    // Assign recurring billing options and upgrade authorization mode if active
+    if (savedUpkeep === 'basic') {
+      lineItems.push({ price: 'price_UPKEEP_BASIC_PRICE_ID', quantity: 1 });
+      containsSubscription = true;
+    } else if (savedUpkeep === 'pro') {
+      lineItems.push({ price: 'price_UPKEEP_PRO_PRICE_ID', quantity: 1 });
+      containsSubscription = true;
+    } else if (savedUpkeep === 'premium') {
+      lineItems.push({ price: 'price_UPKEEP_PREMIUM_PRICE_ID', quantity: 1 });
+      containsSubscription = true;
     }
 
-    // Safety fallback: ensure a user cannot submit empty pricing data
+    // Safety check fallback
     if (lineItems.length === 0) {
       alert("Please choose a core plan setup option before checking out.");
       return;
     }
 
-    // 5. TRIGGER SECURE REDIRECT
+    // 4. TRIGGER SECURE REDIRECT
     stripe.redirectToCheckout({
       lineItems: lineItems,
-      mode: 'payment', // Stripe automatically adapts line charges if subscription keys are found
+      mode: containsSubscription ? 'subscription' : 'payment', 
       successUrl: window.location.origin + '/success.html',
       cancelUrl: window.location.href,
     }).then(function (result) {
@@ -673,18 +677,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
         alert(result.error.message);
       }
     });
-  }
-
-  // Helper routine logic to detect which Upkeep option card is checked in your design layout
-  function getSelectedUpkeepPlan() {
-    // If you are using standard form inputs (e.g. <input type="radio" name="upkeep" value="basic">):
-    // const selection = document.querySelector('input[name="upkeep"]:checked');
-    // return selection ? selection.value : 'none';
-
-    // Alternatively, if your script tracks active items by an CSS class string (e.g., class="card active"):
-    // if (document.getElementById('upkeep-basic').classList.contains('active')) return 'basic';
-    
-    return 'none'; // Default fallback if no custom parameters match up yet
   }
 </script>
 
