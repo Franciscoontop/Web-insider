@@ -488,10 +488,8 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 .final-btns .btn-prim:hover{background:var(--accent)}
 .btn-consult{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black);background:none;border:1.5px solid var(--g200);padding:19px 32px;border-radius:100px;cursor:pointer;transition:all 0.22s;letter-spacing:-0.01em;max-width:320px;text-align:center}
 .btn-consult:hover{border-color:var(--accent);color:var(--accent)}
-
-<script src="https://js.stripe.com/v3/"></script>
-
-  <style>
+  
+<style>
   /* ═══════════════════════════════════
      PAYMENT PAGE STYLES
   ═══════════════════════════════════ */
@@ -511,22 +509,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
   .pay-input{width:100%;font-family:var(--fB);font-size:15px;color:var(--black);background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;outline:none;transition:border-color 0.25s;appearance:none}
   .pay-input:focus{border-color:var(--accent)}
   .pay-input::placeholder{color:var(--g400)}
-
-  /* ─── LIVE STRIPE CARD MOUNT CONTAINER ─── */
-  #stripe-card-element {
-    width: 100%;
-    background: var(--g50);
-    border: 1.5px solid var(--g200);
-    border-radius: 12px;
-    padding: 16px;
-    outline: none;
-    min-height: 52px;
-    margin-bottom: 18px;
-    box-sizing: border-box;
-  }
-  #stripe-card-element.StripeElement--focus {
-    border-color: var(--accent);
-  }
 
   .pay-billing-toggle{display:flex;background:var(--g100);border-radius:100px;padding:5px;gap:4px;margin-bottom:24px}
   .pay-tog-btn{flex:1;font-family:var(--fD);font-weight:700;font-size:14px;padding:11px;border-radius:100px;border:none;cursor:pointer;background:none;color:var(--g400);transition:all 0.3s;text-align:center}
@@ -562,7 +544,7 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 
   footer{background:var(--near-black);color:rgba(255,255,255,0.5);text-align:center;padding:28px 24px;font-family:var(--fL);font-size:12px}
   footer strong{color:white;font-family:var(--fD);font-weight:700}
-  </style>
+</style>
 </head>
 <body>
 
@@ -602,18 +584,14 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
             <button class="pay-tog-btn on" id="ptog-full" onclick="setPaySchedule('full',this)">Pay in Full</button>
             <button class="pay-tog-btn" id="ptog-split" onclick="setPaySchedule('split',this)">Split 50/50</button>
           </div>
-          <div id="payScheduleNote" style="font-family:var(--fL);font-size:13px;color:var(--g400);margin-bottom:20px;line-height:1.6"></div>
-
-          <div class="pay-form-title">Payment Details</div>
-          <div class="pay-field-wrap">
-            <label class="pay-label">Name on Card</label>
-            <input class="pay-input" type="text" placeholder="Mike Johnson" id="pay-cardname">
+          <div id="payScheduleNote" style="font-family:var(--fL);font-size:13px;color:var(--g400);margin-bottom:20px;line-height:1.6">
+            You will be charged the full amount of $499 immediately.
           </div>
 
-          <div id="stripe-card-element"></div>
-
           <div class="pay-notice">🔒 Payments are encrypted and secure</div>
-          <button class="pay-submit" id="paySubmitBtn" onclick="executePayment()">
+          
+          <!-- This button dynamically triggers the Stripe checkout routing logic below -->
+          <button class="pay-submit" id="paySubmitBtn" onclick="executePaymentRedirect()">Complete Purchase →</button>
         </div>
 
         <div class="pay-summary" id="paySummary">
@@ -647,7 +625,47 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
   </div>
 </div>
 
+<!-- Kept your local file system script fully linked so nothing drops out globally -->
 <script src="script.js"></script>
+
+<!-- Embedded Redirect Handler (Safely reads toggles and pushes to Stripe) -->
+<script>
+  let activeSchedule = 'full';
+
+  function setPaySchedule(type, btnElement) {
+    activeSchedule = type;
+    
+    // Clear the styling off both toggle buttons, then apply it to the chosen option
+    document.querySelectorAll('.pay-tog-btn').forEach(b => b.classList.remove('on'));
+    btnElement.classList.add('on');
+
+    const statusText = document.getElementById('payScheduleNote');
+    const labelText = document.getElementById('payTotalLbl');
+    const visualPrice = document.getElementById('payTotalVal');
+
+    if (type === 'full') {
+      statusText.innerText = "You will be charged the full amount of $499 immediately.";
+      labelText.innerText = "Due Today";
+      visualPrice.innerText = "$499";
+    } else {
+      statusText.innerText = "Split Payment Active: Pay $249.50 today, and the remaining balance automatically in 14 days.";
+      labelText.innerText = "First Installment Due";
+      visualPrice.innerText = "$249.50";
+    }
+  }
+
+  function executePaymentRedirect() {
+    // Paste your real Stripe Dashboard generated payment URLs inside the quotes below:
+    const fullPaymentUrl = "https://buy.stripe.com/YOUR_FULL_PAYMENT_LINK";
+    const splitPaymentUrl = "https://buy.stripe.com/YOUR_SPLIT_PAYMENT_LINK";
+
+    if (activeSchedule === 'full') {
+      window.location.href = fullPaymentUrl;
+    } else {
+      window.location.href = splitPaymentUrl;
+    }
+  }
+</script>
 
 <!-- ─── NAV ─── -->
 <nav id="mainNav">
