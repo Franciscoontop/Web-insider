@@ -11,11 +11,10 @@
 
 // ================================================================
 //  ① STRIPE INIT
-//  Replace the key below with your publishable key from:
-//  dashboard.stripe.com → Developers → API Keys
-//  It starts with pk_test_ (for testing) or pk_live_ (for real payments)
+//  Using your verified Stripe Test Publishable Key to connect
+//  seamlessly with your backend environment configurations.
 // ================================================================
-const stripe = Stripe('pk_test_YOUR_PUBLISHABLE_KEY_HERE');
+const stripe = Stripe('pk_test_51TaNh049qpQ3ycd9iUMTSPQYmwQmQcy6qd1UlmwBgUycHqZGZzmvChEHFpgfJN85iaPiMwbkzPh6eaC6oJx0nk2n00wU7qf17a');
 const elements = stripe.elements();
 
 // Card element — Stripe renders the secure card input
@@ -75,7 +74,7 @@ function getAmountCents() {
   const el = document.getElementById('payTotalVal');
   if (!el) return 49900; // fallback $499
   const raw = el.textContent.replace(/[^0-9]/g, '');
-  return parseInt(raw) * 100;
+  return parseInt(raw, 10) * 100;
 }
 
 
