@@ -1,24 +1,79 @@
-// Initialize Stripe using your Public Key
-const stripe = Stripe('pk_live_51TaNh049qpQ3ycd9YVdtSZcv4OuTW1rKqBHmmYE1MgK8vAYak7Q4wo1CNdMdnSp3HQJQxU4mDq7l6la78SBF2Joh00KIVIOb0J
-');
+// Initialize Stripe with your Public Key
+const stripe = Stripe('pk_live_51TaNh049qpQ3ycd9YVdtSZcv4OuTW1rKqBHmmYE1MgK8vAYak7Q4wo1CNdMdnSp3HQJQxU4mDq7l6la78SBF2Joh00KIVIOb0J');
+const elements = stripe.elements();
 
-initialize();
+// Match input internal parameters directly to your page styling fonts
+const styleConfig = {
+  style: {
+    base: {
+      color: '#000000',
+      fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      fontSize: '15px',
+      '::placeholder': { color: '#a0aec0' },
+    },
+    invalid: { color: '#e53e3e', iconColor: '#e53e3e' }
+  }
+};
 
-async function initialize() {
-  // 1. Fetch the secure session ticket from your Vercel backend
-  const fetchClientSecret = async () => {
-    const response = await fetch("/api/create-checkout-session", {
-      method: "POST",
-    });
-    const { clientSecret } = await response.json();
-    return clientSecret;
-  };
+const cardEl = elements.create('card', styleConfig);
+cardEl.mount('#stripe-card-element');
 
-  // 2. Initialize the embedded Stripe checkout UI
-  const checkout = await stripe.createEmbeddedCheckout({
-    fetchClientSecret,
+async function executePayment() {
+  const submitBtn = document.getElementById('paySubmitBtn');
+  const cardNameInput = document.getElementById('pay-cardname').value;
+  const emailInput = document.getElementById('pay-email').value;
+
+  if (!cardNameInput || !emailInput) {
+    alert("Please fill out your Name on Card and Email Address.");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.innerText = "Processing Transaction...";
+
+  // Call Stripe servers directly to extract token
+  const { paymentMethod, error } = await stripe.createPaymentMethod({
+    type: 'card',
+    card: cardEl,
+    billing_details: {
+      name: cardNameInput,
+      email: emailInput
+    }
   });
 
-  // 3. Mount the secure payment inputs into your HTML layout box
-  checkout.mount('#checkout');
+  if (error) {
+    alert(`Payment Verification Failed: ${error.message}`);
+    resetSubmitButton();
+  } else {
+    sendPaymentToServer(paymentMethod.id);
+  }
+}
+
+async function sendPaymentToServer(paymentMethodId) {
+  try {
+    const response = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ paymentMethodId: paymentMethodId })
+    });
+
+    const paymentResult = await response.json();
+
+    if (paymentResult.success) {
+      document.getElementById('payMain').style.display = 'none';
+      document.getElementById('paySuccess').classList.add('show');
+    } else {
+      alert(`Server Charge Refused: ${paymentResult.error}`);
+      resetSubmitButton();
+    }
+  } catch (err) {
+    alert("Unable to reach transaction server. Please try again later.");
+    resetSubmitButton();
+  }
+}
+
+function resetSubmitButton() {
+  const submitBtn = document.getElementById('paySubmitBtn');
+  submitBtn.disabled = false;
+  submitBtn.innerText = "Complete Purchase →";
 }
