@@ -1,5 +1,5 @@
 // Initialize Stripe with your Public Key
-const stripe = Stripe('pk_live_51TaNh049qpQ3ycd9YVdtSZcv4OuTW1rKqBHmmYE1MgK8vAYak7Q4wo1CNdMdnSp3HQJQxU4mDq7l6la78SBF2Joh00KIVIOb0J');
+const stripe = Stripe('pk_test_51TaNh049qpQ3ycd9iUMTSPQYmwQmQcy6qd1UlmwBgUycHqZGZzmvChEHFpgfJN85iaPiMwbkzPh6eaC6oJx0nk2n00wU7qf17a');
 const elements = stripe.elements();
 
 // Match input internal parameters directly to your page styling fonts
