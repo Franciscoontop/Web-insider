@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Web Insider — See Your Business Live</title>
-<script src="https://js.stripe.com/v3/"></script>  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
@@ -488,207 +487,86 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 .final-btns .btn-prim:hover{background:var(--accent)}
 .btn-consult{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black);background:none;border:1.5px solid var(--g200);padding:19px 32px;border-radius:100px;cursor:pointer;transition:all 0.22s;letter-spacing:-0.01em;max-width:320px;text-align:center}
 .btn-consult:hover{border-color:var(--accent);color:var(--accent)}
-  
-<script src="https://js.stripe.com/v3/"></script>
 
-<style>
-  /* ═══════════════════════════════════
-      PAYMENT PAGE STYLES
-  ═══════════════════════════════════ */
-  #pg-payment{background:var(--g50);padding:88px 24px 80px;min-height:100%}
-  .pay-wrap{max-width:960px;margin:0 auto}
-  .pay-header{text-align:center;margin-bottom:52px}
-  .pay-back{font-family:var(--fB);font-size:14px;color:var(--g400);background:none;border:none;cursor:pointer;padding:8px 0;margin-bottom:24px;display:flex;align-items:center;gap:6px;transition:color 0.2s;justify-content:center;width:100%}
-  .pay-back:hover{color:var(--black)}
-  .pay-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
-  @media(max-width:800px){.pay-grid{grid-template-columns:1fr}}
-  .pay-form-wrap{background:var(--white);border-radius:22px;padding:36px;border:1px solid var(--g200)}
-  .pay-form-title{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--black);margin-bottom:28px}
-  .pay-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:480px){.pay-row{grid-template-columns:1fr}}
-  .pay-field-wrap{margin-bottom:18px}
-  .pay-label{font-family:var(--fB);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--g400);display:block;margin-bottom:8px}
-  .pay-input{width:100%;font-family:var(--fB);font-size:15px;color:var(--black);background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;outline:none;transition:border-color 0.25s;appearance:none}
-  .pay-input:focus{border-color:var(--accent)}
-  .pay-input::placeholder{color:var(--g400)}
+/* ═══════════════════════════════════
+   PAYMENT PAGE
+═══════════════════════════════════ */
+#pg-payment{background:var(--g50);padding:88px 24px 80px;min-height:100%}
+.pay-wrap{max-width:960px;margin:0 auto}
+.pay-header{text-align:center;margin-bottom:52px}
+.pay-back{font-family:var(--fB);font-size:14px;color:var(--g400);background:none;border:none;cursor:pointer;padding:8px 0;margin-bottom:24px;display:flex;align-items:center;gap:6px;transition:color 0.2s;justify-content:center;width:100%}
+.pay-back:hover{color:var(--black)}
+.pay-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+@media(max-width:800px){.pay-grid{grid-template-columns:1fr}}
+.pay-form-wrap{background:var(--white);border-radius:22px;padding:36px;border:1px solid var(--g200)}
+.pay-form-title{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--black);margin-bottom:28px}
+.pay-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:480px){.pay-row{grid-template-columns:1fr}}
+.pay-field-wrap{margin-bottom:18px}
+.pay-label{font-family:var(--fB);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--g400);display:block;margin-bottom:8px}
+.pay-input{width:100%;font-family:var(--fB);font-size:15px;color:var(--black);background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;outline:none;transition:border-color 0.25s;appearance:none}
+.pay-input:focus{border-color:var(--accent)}
+.pay-input::placeholder{color:var(--g400)}
+/* ─── STRIPE INTEGRATION POINT ─── */
+/*
+  ┌────────────────────────────────────────────────────────────────────┐
+  │  STRIPE INTEGRATION                                               │
+  │                                                                    │
+  │  1. Add Stripe.js script to <head>:                               │
+  │     <script src="https://js.stripe.com/v3/"></script>             │
+  │                                                                    │
+  │  2. Initialize Stripe with your publishable key:                  │
+  │     const stripe = Stripe('pk_live_YOUR_KEY_HERE');               │
+  │     const elements = stripe.elements();                           │
+  │                                                                    │
+  │  3. Mount card element inside #stripe-card-element div below:     │
+  │     const card = elements.create('card', { style: stripeStyle }); │
+  │     card.mount('#stripe-card-element');                           │
+  │                                                                    │
+  │  4. On form submit, call stripe.createPaymentMethod() or          │
+  │     stripe.confirmCardPayment() with your PaymentIntent           │
+  │     secret from your backend.                                     │
+  │                                                                    │
+  │  5. Replace the fake card fields below with the mounted element.  │
+  └────────────────────────────────────────────────────────────────────┘
+*/
+.stripe-placeholder{background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;min-height:52px;display:flex;align-items:center;margin-bottom:18px;gap:12px;font-family:var(--fL);font-size:13px;color:var(--g400)}
+.stripe-placeholder::before{content:'🔒';font-size:16px}
+.pay-billing-toggle{display:flex;background:var(--g100);border-radius:100px;padding:5px;gap:4px;margin-bottom:24px}
+.pay-tog-btn{flex:1;font-family:var(--fD);font-weight:700;font-size:14px;padding:11px;border-radius:100px;border:none;cursor:pointer;background:none;color:var(--g400);transition:all 0.3s;text-align:center}
+.pay-tog-btn.on{background:var(--white);color:var(--black);box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+.pay-notice{font-family:var(--fL);font-size:12px;color:var(--g400);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
+.pay-submit{width:100%;font-family:var(--fD);font-weight:700;font-size:17px;color:var(--white);background:var(--black);border:none;padding:18px;border-radius:14px;cursor:pointer;transition:all 0.28s cubic-bezier(.34,1.56,.64,1);letter-spacing:-0.01em;margin-top:8px}
+.pay-submit:hover{background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
+/* Order Summary */
+.pay-summary{background:var(--white);border-radius:22px;padding:32px;border:1px solid var(--g200);position:sticky;top:82px}
+.pay-sum-title{font-family:var(--fD);font-weight:700;font-size:18px;letter-spacing:-0.03em;color:var(--black);margin-bottom:24px}
+.pay-plan-badge{display:flex;align-items:center;gap:12px;background:var(--g50);border-radius:14px;padding:16px;margin-bottom:20px;border:1px solid var(--g200)}
+.pay-plan-icon{width:44px;height:44px;border-radius:12px;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.pay-plan-name{font-family:var(--fD);font-weight:700;font-size:17px;color:var(--black)}
+.pay-plan-desc{font-family:var(--fL);font-size:12px;color:var(--g400);margin-top:2px}
+.pay-line{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g200);font-family:var(--fL);font-size:13px}
+.pay-line:last-of-type{border-bottom:none}
+.pay-line-nm{color:var(--black);font-weight:500}
+.pay-line-val{color:var(--g600);font-family:var(--fD);font-weight:600;font-size:13px}
+.pay-total-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;margin-top:4px;border-top:2px solid var(--black)}
+.pay-total-lbl{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black)}
+.pay-total-val{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--accent)}
+.pay-guarantee{display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px;margin-top:20px}
+.pay-guarantee-icon{font-size:22px;flex-shrink:0}
+.pay-guarantee-txt{font-family:var(--fL);font-size:12px;color:var(--g600);line-height:1.5}
+.pay-success{display:none;text-align:center;padding:60px 24px;max-width:520px;margin:0 auto}
+.pay-success.show{display:block}
+.pay-success-icon{font-size:64px;display:block;margin-bottom:24px;animation:successPop 0.6s cubic-bezier(.22,1,.56,1) forwards}
+@keyframes successPop{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+.pay-success-title{font-family:var(--fD);font-weight:700;font-size:32px;letter-spacing:-0.04em;color:var(--black);margin-bottom:12px}
+.pay-success-sub{font-family:var(--fL);font-size:16px;color:var(--g600);line-height:1.7;margin-bottom:32px}
 
-  .pay-notice{font-family:var(--fL);font-size:12px;color:var(--g400);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
-  .pay-submit{width:100%;font-family:var(--fD);font-weight:700;font-size:17px;color:var(--white);background:var(--black);border:none;padding:18px;border-radius:14px;cursor:pointer;transition:all 0.28s cubic-bezier(.34,1.56,.64,1);letter-spacing:-0.01em;margin-top:8px}
-  .pay-submit:hover{background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
-   
-  /* Order Summary */
-  .pay-summary{background:var(--white);border-radius:22px;padding:32px;border:1px solid var(--g200);position:sticky;top:82px}
-  .pay-sum-title{font-family:var(--fD);font-weight:700;font-size:18px;letter-spacing:-0.03em;color:var(--black);margin-bottom:24px}
-  .pay-plan-badge{display:flex;align-items:center;gap:12px;background:var(--g50);border-radius:14px;padding:16px;margin-bottom:20px;border:1px solid var(--g200)}
-  .pay-plan-icon{width:44px;height:44px;border-radius:12px;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  .pay-plan-name{font-family:var(--fD);font-weight:700;font-size:17px;color:var(--black)}
-  .pay-plan-desc{font-family:var(--fL);font-size:12px;color:var(--g400);margin-top:2px}
-  .pay-line{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g200);font-family:var(--fL);font-size:13px}
-  .pay-line:last-of-type{border-bottom:none}
-  .pay-line-nm{color:var(--black);font-weight:500}
-  .pay-line-val{color:var(--g600);font-family:var(--fD);font-weight:600;font-size:13px}
-  .pay-total-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;margin-top:4px;border-top:2px solid var(--black)}
-  .pay-total-lbl{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black)}
-  .pay-total-val{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--accent)}
-  .pay-guarantee{display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px;margin-top:20px}
-  .pay-guarantee-icon{font-size:22px;flex-shrink:0}
-  .pay-guarantee-txt{font-family:var(--fL);font-size:12px;color:var(--g600);line-height:1.5}
-   
-  .pay-success{display:none;text-align:center;padding:60px 24px;max-width:520px;margin:0 auto}
-  .pay-success.show{display:block}
-  .pay-success-icon{font-size:64px;display:block;margin-bottom:24px;animation:successPop 0.6s cubic-bezier(.22,1,.56,1) forwards}
-  @keyframes successPop{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
-  .pay-success-title{font-family:var(--fD);font-weight:700;font-size:32px;letter-spacing:-0.04em;color:var(--black);margin-bottom:12px}
-  .pay-success-sub{font-family:var(--fL);font-size:16px;color:var(--g600);line-height:1.7;margin-bottom:32px}
-
-  footer{background:var(--near-black);color:rgba(255,255,255,0.5);text-align:center;padding:28px 24px;font-family:var(--fL);font-size:12px}
-  footer strong{color:white;font-family:var(--fD);font-weight:700}
+footer{background:var(--near-black);color:rgba(255,255,255,0.5);text-align:center;padding:28px 24px;font-family:var(--fL);font-size:12px}
+footer strong{color:white;font-family:var(--fD);font-weight:700}
 </style>
 </head>
 <body>
-
-<div class="page" id="pg-payment">
-  <div class="pay-wrap">
-    <div id="payMain">
-      <div class="pay-header">
-        <button class="pay-back" onclick="window.location.href='index.html'">← Back to Plans</button>
-        <p class="sec-eye">Complete Your Order</p>
-        <h2 class="sec-title" id="payTitle">You're almost there.</h2>
-        <p class="sec-sub">Review your plan and complete your purchase below.</p>
-      </div>
-      <div class="pay-grid">
-        <div class="pay-form-wrap">
-          <div class="pay-form-title">Your Information</div>
-          <div class="pay-row">
-            <div class="pay-field-wrap">
-              <label class="pay-label">First Name</label>
-              <input class="pay-input" type="text" placeholder="Mike" id="pay-fname">
-            </div>
-            <div class="pay-field-wrap">
-              <label class="pay-label">Last Name</label>
-              <input class="pay-input" type="text" placeholder="Johnson" id="pay-lname">
-            </div>
-          </div>
-          <div class="pay-field-wrap">
-            <label class="pay-label">Email Address</label>
-            <input class="pay-input" type="email" placeholder="mike@yourbusiness.com" id="pay-email">
-          </div>
-          <div class="pay-field-wrap">
-            <label class="pay-label">Phone Number</label>
-            <input class="pay-input" type="tel" placeholder="(718) 555-0100" id="pay-phone">
-          </div>
-
-          <div class="pay-notice" style="margin-top:32px">🔒 Payments are encrypted and secure</div>
-           
-          <button class="pay-submit" id="paySubmitBtn" onclick="executePaymentRedirect()">Complete Purchase →</button>
-        </div>
-
-        <div class="pay-summary" id="paySummary">
-          <div class="pay-sum-title">Order Summary</div>
-          <div class="pay-plan-badge">
-            <div class="pay-plan-icon" id="payPlanIcon">🚀</div>
-            <div>
-              <div class="pay-plan-name" id="payPlanName">Starter Plan</div>
-              <div class="pay-plan-desc" id="payPlanDesc">1–3 pages · AI Chat · 7 days</div>
-            </div>
-          </div>
-          <div id="payLineItems"></div>
-          <div class="pay-total-row">
-            <div class="pay-total-lbl" id="payTotalLbl">Due Today</div>
-            <div class="pay-total-val" id="payTotalVal">$499</div>
-          </div>
-          <div class="pay-guarantee">
-            <span class="pay-guarantee-icon">🛡️</span>
-            <div class="pay-guarantee-txt">Satisfaction guaranteed. If we can't deliver what we promised, you get your money back — no questions asked.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pay-success" id="paySuccess">
-      <span class="pay-success-icon">🎉</span>
-      <div class="pay-success-title">You're in. Let's build.</div>
-      <div class="pay-success-sub">Your order is confirmed. Our team will reach out within 24 hours to kick off your project. Check your email for your receipt and next steps.</div>
-      <button class="btn-prim" style="margin-top:32px" onclick="location.reload()">Back to Home</button>
-    </div>
-  </div>
-</div>
-
-<script src="script.js"></script>
-
-<script>
-  // 1. Initialize Stripe Test Credentials
-  const stripe = Stripe('pk_test_51TaNhEKivGT2h1qLK9ejfkmHEnhWdZD7c7In6i3Njns5IIYJZtPG2paDvDhoIqv2rqZDd3LiEb7hGuJpRWt3snc8009jpbAwsB');
-
-  // Load selected plan details dynamically on page setup
-  window.addEventListener('DOMContentLoaded', () => {
-    const activePlan = localStorage.getItem('selectedPlanName') || 'Starter Plan';
-    const activePrice = localStorage.getItem('selectedPlanPrice') || '$499';
-    const activeDesc = localStorage.getItem('selectedPlanDesc') || '1–3 pages · AI Chat · 7 days';
-
-    document.getElementById('payPlanName').innerText = activePlan;
-    document.getElementById('payTotalVal').innerText = activePrice;
-    document.getElementById('payPlanDesc').innerText = activeDesc;
-  });
-
-  function executePaymentRedirect() {
-    const planName = document.getElementById('payPlanName').innerText.trim().toLowerCase();
-    let lineItems = [];
-    let containsSubscription = false;
-
-    // 2. MAP MAIN SERVICE PLANS (One-Time)
-    if (planName.includes('start')) {
-      lineItems.push({ price: 'price_1TaNrIKivGT2h1qLPAfYx0dL', quantity: 1 });
-    } else if (planName.includes('premium') || planName.includes('prem')) {
-      lineItems.push({ price: 'price_1TaO0YKivGT2h1qLH47xPh3u', quantity: 1 });
-    } else if (planName.includes('pro')) {
-      // TYPO FIXED: Removed trailing ", inside string quotes
-      lineItems.push({ price: 'price_1TaNuSKivGT2h1qLvXsOICfJ', quantity: 1 });
-    }
-
-    // 3. READ SELECTIONS FROM LOCALSTORAGE
-    const savedAddons = JSON.parse(localStorage.getItem('selectedAddons')) || [];
-    const savedUpkeep = localStorage.getItem('selectedUpkeep') || 'none';
-
-    // Loop through and assign accurate addon Price IDs
-    savedAddons.forEach(addon => {
-      if (addon === 'lead')   lineItems.push({ price: 'price_ADDON_LEAD_PRICE_ID', quantity: 1 });
-      if (addon === 'popups') lineItems.push({ price: 'price_ADDON_POPUPS_PRICE_ID', quantity: 1 });
-      if (addon === 'seo')    lineItems.push({ price: 'price_ADDON_SEO_PRICE_ID', quantity: 1 });
-      if (addon === 'review') lineItems.push({ price: 'price_ADDON_REVIEW_PRICE_ID', quantity: 1 });
-    });
-
-    // Assign recurring billing options and upgrade authorization mode if active
-    if (savedUpkeep === 'basic') {
-      lineItems.push({ price: 'price_UPKEEP_BASIC_PRICE_ID', quantity: 1 });
-      containsSubscription = true;
-    } else if (savedUpkeep === 'pro') {
-      lineItems.push({ price: 'price_UPKEEP_PRO_PRICE_ID', quantity: 1 });
-      containsSubscription = true;
-    } else if (savedUpkeep === 'premium') {
-      lineItems.push({ price: 'price_UPKEEP_PREMIUM_PRICE_ID', quantity: 1 });
-      containsSubscription = true;
-    }
-
-    // Safety check fallback
-    if (lineItems.length === 0) {
-      alert("Please choose a core plan setup option before checking out.");
-      return;
-    }
-
-    // 4. TRIGGER SECURE REDIRECT
-    stripe.redirectToCheckout({
-      lineItems: lineItems,
-      mode: containsSubscription ? 'subscription' : 'payment', 
-      successUrl: window.location.origin + '/success.html',
-      cancelUrl: window.location.href,
-    }).then(function (result) {
-      if (result.error) {
-        alert(result.error.message);
-      }
-    });
-  }
-</script>
 
 <!-- ─── NAV ─── -->
 <nav id="mainNav">
