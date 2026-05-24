@@ -6,8 +6,6 @@
 <title>Web Insider — See Your Business Live</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-<!-- ✅ STRIPE.JS — must be loaded before your script -->
-<script src="https://js.stripe.com/v3/"></script>
 <style>
 /* ─── VARS ─── */
 :root {
@@ -509,32 +507,37 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 .pay-input{width:100%;font-family:var(--fB);font-size:15px;color:var(--black);background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;outline:none;transition:border-color 0.25s;appearance:none}
 .pay-input:focus{border-color:var(--accent)}
 .pay-input::placeholder{color:var(--g400)}
-/* ─── STRIPE CARD ELEMENT ─── */
-#stripe-card-element{
-  background:var(--g50);
-  border:1.5px solid var(--g200);
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:8px;
-  transition:border-color 0.25s;
-  min-height:52px;
-}
-#stripe-card-element.focused{border-color:var(--accent)}
-#stripe-card-errors{
-  color:#ef4444;
-  font-family:var(--fL);
-  font-size:13px;
-  min-height:20px;
-  margin-bottom:14px;
-  line-height:1.4;
-}
+/* ─── STRIPE INTEGRATION POINT ─── */
+/*
+  ┌────────────────────────────────────────────────────────────────────┐
+  │  STRIPE INTEGRATION                                               │
+  │                                                                    │
+  │  1. Add Stripe.js script to <head>:                               │
+  │     <script src="https://js.stripe.com/v3/"></script>             │
+  │                                                                    │
+  │  2. Initialize Stripe with your publishable key:                  │
+  │     const stripe = Stripe('pk_live_YOUR_KEY_HERE');               │
+  │     const elements = stripe.elements();                           │
+  │                                                                    │
+  │  3. Mount card element inside #stripe-card-element div below:     │
+  │     const card = elements.create('card', { style: stripeStyle }); │
+  │     card.mount('#stripe-card-element');                           │
+  │                                                                    │
+  │  4. On form submit, call stripe.createPaymentMethod() or          │
+  │     stripe.confirmCardPayment() with your PaymentIntent           │
+  │     secret from your backend.                                     │
+  │                                                                    │
+  │  5. Replace the fake card fields below with the mounted element.  │
+  └────────────────────────────────────────────────────────────────────┘
+*/
+.stripe-placeholder{background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;min-height:52px;display:flex;align-items:center;margin-bottom:18px;gap:12px;font-family:var(--fL);font-size:13px;color:var(--g400)}
+.stripe-placeholder::before{content:'🔒';font-size:16px}
 .pay-billing-toggle{display:flex;background:var(--g100);border-radius:100px;padding:5px;gap:4px;margin-bottom:24px}
 .pay-tog-btn{flex:1;font-family:var(--fD);font-weight:700;font-size:14px;padding:11px;border-radius:100px;border:none;cursor:pointer;background:none;color:var(--g400);transition:all 0.3s;text-align:center}
 .pay-tog-btn.on{background:var(--white);color:var(--black);box-shadow:0 2px 10px rgba(0,0,0,0.08)}
 .pay-notice{font-family:var(--fL);font-size:12px;color:var(--g400);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
 .pay-submit{width:100%;font-family:var(--fD);font-weight:700;font-size:17px;color:var(--white);background:var(--black);border:none;padding:18px;border-radius:14px;cursor:pointer;transition:all 0.28s cubic-bezier(.34,1.56,.64,1);letter-spacing:-0.01em;margin-top:8px}
-.pay-submit:hover:not(:disabled){background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
-.pay-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.pay-submit:hover{background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
 /* Order Summary */
 .pay-summary{background:var(--white);border-radius:22px;padding:32px;border:1px solid var(--g200);position:sticky;top:82px}
 .pay-sum-title{font-family:var(--fD);font-weight:700;font-size:18px;letter-spacing:-0.03em;color:var(--black);margin-bottom:24px}
@@ -772,6 +775,7 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#081a08,#0c2e16)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Home Services</div><div class="reel-title">We Fix It.<br>Fast.</div><div class="reel-sub">Free estimates · 24/7</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0018,#360036)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Health & Wellness</div><div class="reel-title">Feel Better.<br>Start Today.</div><div class="reel-sub">Book sessions · Memberships</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1000,#3a2600)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Retail</div><div class="reel-title">Shop Local.<br>Ship Fast.</div><div class="reel-sub">Online store · Curbside</div></div></div>
+      <!-- Duplicated for seamless loop -->
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0800,#3d1800)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Barbershop</div><div class="reel-title">Fresh Cuts<br>Every Time</div><div class="reel-sub">Book online · AI chat live</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#000d1a,#001840)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Restaurant</div><div class="reel-title">Reserve Your<br>Table Tonight</div><div class="reel-sub">Menu live · Order direct</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#081a08,#0c2e16)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Home Services</div><div class="reel-title">We Fix It.<br>Fast.</div><div class="reel-sub">Free estimates · 24/7</div></div></div>
@@ -792,7 +796,7 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
   <div class="lp-footer"><p><strong>Web Insider</strong> &nbsp;·&nbsp; hello@webinsider.co &nbsp;·&nbsp; webinsider.co &nbsp;·&nbsp; Built in the Bronx</p></div>
 </div>
 
-<!-- ════════════ PAGE: HERO ════════════ -->
+<!-- ════════════ PAGE: HERO (Build Site Landing) ════════════ -->
 <div class="page" id="pg-hero">
   <div class="hero-bg"><div class="hero-bg-glow"></div><div class="hero-grain-el"></div></div>
   <div class="hero-content">
@@ -1011,20 +1015,42 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
           </div>
           <div id="payScheduleNote" style="font-family:var(--fL);font-size:13px;color:var(--g400);margin-bottom:20px;line-height:1.6"></div>
 
-          <div class="pay-form-title">Card Details</div>
+          <div class="pay-form-title">Payment Details</div>
           <div class="pay-field-wrap">
             <label class="pay-label">Name on Card</label>
             <input class="pay-input" type="text" placeholder="Mike Johnson" id="pay-cardname">
           </div>
 
-          <!-- ✅ STRIPE CARD ELEMENT — Stripe mounts here automatically -->
-          <label class="pay-label">Card Information</label>
-          <div id="stripe-card-element"></div>
-          <div id="stripe-card-errors"></div>
+          <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+               STRIPE CARD ELEMENT — REPLACE PLACEHOLDER BELOW WITH STRIPE
+               
+               Step 1: Add to <head>:
+                 <script src="https://js.stripe.com/v3/"></script>
+               
+               Step 2: In your JS init:
+                 const stripe = Stripe('pk_live_YOUR_PUBLISHABLE_KEY');
+                 const elements = stripe.elements();
+                 const cardEl = elements.create('card', {
+                   style: { base: { fontFamily: 'Cabinet Grotesk, sans-serif', fontSize: '15px', color: '#080808' } }
+                 });
+                 cardEl.mount('#stripe-card-element');
+               
+               Step 3: On pay-submit click, replace fakeSubmit() with:
+                 const {paymentMethod, error} = await stripe.createPaymentMethod({
+                   type: 'card', card: cardEl,
+                   billing_details: { name: pay-cardname.value, email: pay-email.value }
+                 });
+                 // Then send paymentMethod.id to your backend
+               
+               Step 4: Delete the .stripe-placeholder div below
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+          <div id="stripe-card-element">
+            <div class="stripe-placeholder">Card details go here — connect Stripe above</div>
+          </div>
           <!-- END STRIPE CARD ELEMENT -->
 
-          <div class="pay-notice">🔒 Payments are 256-bit encrypted and secure via Stripe</div>
-          <button class="pay-submit" id="paySubmitBtn" onclick="handlePayment()">Complete Purchase →</button>
+          <div class="pay-notice">🔒 Payments are encrypted and secure</div>
+          <button class="pay-submit" id="paySubmitBtn" onclick="fakeSubmit()">Complete Purchase →</button>
         </div>
 
         <!-- Order Summary -->
@@ -1061,159 +1087,6 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
 </div>
 
 <script>
-// ════════════════════ STRIPE INIT ════════════════════
-// ✅ Using your test publishable key — swap to pk_live_... when ready to go live
-const stripe = Stripe('pk_test_51TaNhEKivGT2h1qLK9ejfkmHEnhWdZD7c7In6i3Njns5IIYJZtPG2paDvDhoIqv2rqZDd3LiEb7hGuJpRWt3snc8009jpbAwsB');
-const stripeElements = stripe.elements();
-const cardElement = stripeElements.create('card', {
-  style: {
-    base: {
-      fontFamily: "'Cabinet Grotesk', 'DM Sans', sans-serif",
-      fontSize: '15px',
-      color: '#080808',
-      fontWeight: '400',
-      '::placeholder': { color: '#9898a8' }
-    },
-    invalid: { color: '#ef4444', iconColor: '#ef4444' }
-  }
-});
-let stripeCardMounted = false;
-
-// Mount the card element when the payment page opens (only once)
-function mountStripeCard() {
-  if (!stripeCardMounted) {
-    cardElement.mount('#stripe-card-element');
-    stripeCardMounted = true;
-    // Highlight the card element border on focus
-    cardElement.on('focus', () => {
-      document.getElementById('stripe-card-element').classList.add('focused');
-    });
-    cardElement.on('blur', () => {
-      document.getElementById('stripe-card-element').classList.remove('focused');
-    });
-    // Show real-time card errors as user types
-    cardElement.on('change', (event) => {
-      const errorEl = document.getElementById('stripe-card-errors');
-      errorEl.textContent = event.error ? event.error.message : '';
-    });
-  }
-}
-
-// ════════════════════ CART HELPERS ════════════════════
-// Calculates the one-time total from tier + add-ons (monthly is billed separately)
-function getCartTotal() {
-  let total = TIER_PRICES[S.tier];
-  Object.entries(S.addons).forEach(([k, v]) => {
-    if (v) total += ADDON_PRICES[k];
-  });
-  return total;
-}
-
-// Builds a readable description of what was purchased
-function getCartDescription() {
-  const tierName = S.tier.charAt(0).toUpperCase() + S.tier.slice(1);
-  const parts = [tierName + ' Plan'];
-  Object.entries(S.addons).forEach(([k, v]) => {
-    if (v) {
-      const addon = ADDONS_DATA.find(a => a.id === k);
-      if (addon) parts.push(addon.n);
-    }
-  });
-  if (S.monthly && S.monthly !== 'none') {
-    const m = MONTHLY_DATA.find(m => m.id === S.monthly);
-    if (m) parts.push(m.n + ' Upkeep');
-  }
-  return parts.join(' + ');
-}
-
-// ════════════════════ PAYMENT HANDLER ════════════════════
-async function handlePayment() {
-  const btn = document.getElementById('paySubmitBtn');
-  const errorEl = document.getElementById('stripe-card-errors');
-  errorEl.textContent = '';
-
-  // ── Validate all required fields ──
-  const fname = document.getElementById('pay-fname').value.trim();
-  const lname = document.getElementById('pay-lname').value.trim();
-  const email = document.getElementById('pay-email').value.trim();
-  const cardName = document.getElementById('pay-cardname').value.trim();
-
-  if (!fname || !lname) {
-    errorEl.textContent = 'Please enter your first and last name.';
-    return;
-  }
-  if (!email || !email.includes('@')) {
-    errorEl.textContent = 'Please enter a valid email address.';
-    return;
-  }
-  if (!cardName) {
-    errorEl.textContent = 'Please enter the name on your card.';
-    return;
-  }
-
-  // ── Disable button and show loading state ──
-  btn.disabled = true;
-  btn.textContent = 'Processing...';
-
-  try {
-    // ── Step 1: Calculate amount based on payment schedule ──
-    const baseTotal = getCartTotal();
-    const chargeAmount = paySchedule === 'split'
-      ? Math.ceil(baseTotal / 2)
-      : baseTotal;
-
-    // ── Step 2: Ask your Vercel backend to create a PaymentIntent ──
-    const res = await fetch('/api/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        amount: chargeAmount,
-        description: getCartDescription(),
-        customerEmail: email,
-        customerName: fname + ' ' + lname,
-      })
-    });
-
-    if (!res.ok) {
-      const errData = await res.json().catch(() => ({}));
-      throw new Error(errData.error || 'Server error. Please try again.');
-    }
-
-    const { clientSecret } = await res.json();
-
-    // ── Step 3: Confirm the card payment with Stripe ──
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: cardElement,
-        billing_details: {
-          name: cardName,
-          email: email,
-        }
-      }
-    });
-
-    if (error) {
-      // Stripe declined or card error — show message, re-enable button
-      errorEl.textContent = error.message;
-      btn.disabled = false;
-      btn.textContent = 'Complete Purchase →';
-      return;
-    }
-
-    if (paymentIntent.status === 'succeeded') {
-      // ✅ Payment successful!
-      document.getElementById('payMain').style.display = 'none';
-      document.getElementById('paySuccess').classList.add('show');
-      document.getElementById('pg-payment').scrollTop = 0;
-    }
-
-  } catch (err) {
-    errorEl.textContent = err.message || 'Something went wrong. Please try again.';
-    btn.disabled = false;
-    btn.textContent = 'Complete Purchase →';
-  }
-}
-
 // ════════════════════ DATA ════════════════════
 const S={
   bizName:'',industry:'',industryOther:'',hasWebsite:'',goals:[],goalOther:'',
@@ -1293,6 +1166,7 @@ function goPage(name){
   if(name==='hero') resetHero();
 }
 
+// Safe nav — warns if in flow
 function goPageSafe(name){
   if(isInFlow()){
     pendingNav=name;
@@ -1318,6 +1192,7 @@ function updateNav(name){
   } else {
     navPrice.classList.remove('show');
   }
+  // Scroll progress only on landing
   document.getElementById('scroll-prog').classList.toggle('vis',name==='landing');
 }
 
@@ -1341,6 +1216,7 @@ function confirmLeave(){
   document.getElementById('warn-modal').classList.remove('open');
   const dest=pendingNav||'landing';
   pendingNav=null;
+  // Reset flow state
   S.goals=[];S.currentQ=0;S.bizName='';S.industry='';S.industryOther='';S.vibe='';S.vibeOther='';
   S.hasWebsite='';S.bookings='';S.bookingsOther='';S.goalOther='';
   S.tier='starter';S.addons={lead:false,popups:false,seo:false,reviews:false};S.monthly='none';
@@ -1369,6 +1245,7 @@ function initCityCanvas(){
   let t=0;
   function draw(){
     ctx.clearRect(0,0,W,H);t+=0.011;
+    // Lines first
     for(let i=0;i<dots.length;i++){
       for(let j=i+1;j<dots.length;j++){
         const dx=dots[i].x-dots[j].x,dy=dots[i].y-dots[j].y,dist=Math.sqrt(dx*dx+dy*dy);
@@ -1473,7 +1350,9 @@ function initCardGlow(){
 function resetLanding(){
   countersRun=false;
   document.querySelectorAll('.lp-cnt-num').forEach(el=>{el.textContent='0'+(el.dataset.suffix||'')});
+  // Reset headline
   document.querySelectorAll('#lpHL .wd').forEach(w=>w.classList.remove('vis'));
+  // Reset scroll reveals
   document.querySelectorAll('#pg-landing .sr,#pg-landing .sr-sc,#pg-landing .sr-l,#pg-landing .sr-r,#pg-landing .sr-blur').forEach(el=>{el.classList.remove('v');el.classList.add('h');});
   setTimeout(()=>{
     initHeadline();
@@ -1719,62 +1598,51 @@ const TIER_INFO={
   pro:{name:'Pro Plan',desc:'Up to 6 pages · Premium design · 10 days',icon:'🚀',price:899},
   premium:{name:'Premium Plan',desc:'Unlimited pages · All AI features · 7 days',icon:'👑',price:1499}
 };
-
 function buildPaymentPage(){
   const info=TIER_INFO[S.tier];
   document.getElementById('payTitle').textContent=`You chose ${info.name}.`;
   document.getElementById('payPlanIcon').textContent=info.icon;
   document.getElementById('payPlanName').textContent=info.name;
   document.getElementById('payPlanDesc').textContent=info.desc;
-
-  // Build line items dynamically from whatever was selected
+  // Line items
   let lines=`<div class="pay-line"><span class="pay-line-nm">${info.name}</span><span class="pay-line-val">$${info.price.toLocaleString()}</span></div>`;
-  Object.entries(S.addons).forEach(([k,v])=>{
-    if(v){
-      const a=ADDONS_DATA.find(a=>a.id===k);
-      lines+=`<div class="pay-line"><span class="pay-line-nm">${a.n}</span><span class="pay-line-val">+$${a.p}</span></div>`;
-    }
-  });
+  let addTotal=0;
+  Object.entries(S.addons).forEach(([k,v])=>{if(v){const a=ADDONS_DATA.find(a=>a.id===k);lines+=`<div class="pay-line"><span class="pay-line-nm">${a.n}</span><span class="pay-line-val">+$${a.p}</span></div>`;addTotal+=a.p;}});
   const mp=MONTHLY_PRICES[S.monthly]||0;
-  if(mp){
-    const m=MONTHLY_DATA.find(m=>m.id===S.monthly);
-    lines+=`<div class="pay-line"><span class="pay-line-nm">${m.n} (monthly)</span><span class="pay-line-val">+$${mp}/mo</span></div>`;
-  }
+  if(mp) lines+=`<div class="pay-line"><span class="pay-line-nm">Monthly Upkeep</span><span class="pay-line-val">+$${mp}/mo</span></div>`;
   document.getElementById('payLineItems').innerHTML=lines;
-
-  // Reset to full pay, update totals
   setPaySchedule('full',document.getElementById('ptog-full'));
-
-  // Reset success/error states
+  // Reset success state
   document.getElementById('payMain').style.display='';
   document.getElementById('paySuccess').classList.remove('show');
-  document.getElementById('stripe-card-errors').textContent='';
-  const btn=document.getElementById('paySubmitBtn');
-  btn.disabled=false;
-  btn.textContent='Complete Purchase →';
-
-  // ✅ Mount the Stripe card element now that the page is visible
-  mountStripeCard();
 }
-
 function setPaySchedule(type,btn){
   paySchedule=type;
-  document.querySelectorAll('.pay-tog-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  const baseTotal=getCartTotal();
+  document.querySelectorAll('.pay-tog-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  const info=TIER_INFO[S.tier];
+  let addTotal=0;Object.entries(S.addons).forEach(([k,v])=>{if(v) addTotal+=ADDON_PRICES[k];});
+  const base=info.price+addTotal;
   const note=document.getElementById('payScheduleNote');
   const totalLbl=document.getElementById('payTotalLbl');
   const totalVal=document.getElementById('payTotalVal');
   if(type==='full'){
     note.textContent='Pay the full amount today and get started immediately.';
-    totalLbl.textContent='Due Today';
-    totalVal.textContent='$'+baseTotal.toLocaleString();
+    totalLbl.textContent='Due Today';totalVal.textContent='$'+base.toLocaleString();
   } else {
-    const half=Math.ceil(baseTotal/2);
-    note.textContent=`Pay $${half.toLocaleString()} today, then $${(baseTotal-half).toLocaleString()} when your site is delivered.`;
-    totalLbl.textContent='Due Today (50%)';
-    totalVal.textContent='$'+half.toLocaleString();
+    const half=Math.ceil(base/2);
+    note.textContent=`Pay $${half.toLocaleString()} today, then $${(base-half).toLocaleString()} when your site is delivered.`;
+    totalLbl.textContent='Due Today (50%)';totalVal.textContent='$'+half.toLocaleString();
   }
+}
+function fakeSubmit(){
+  // In production, replace with Stripe payment processing
+  const btn=document.getElementById('paySubmitBtn');
+  btn.textContent='Processing...';btn.style.opacity='0.7';btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById('payMain').style.display='none';
+    document.getElementById('paySuccess').classList.add('show');
+    document.getElementById('pg-payment').scrollTop=0;
+  },2000);
 }
 
 // ════════════════════ BOOKING ════════════════════
@@ -1799,4 +1667,16 @@ function closePricing(){document.getElementById('price-modal').classList.remove(
 function closePricingOutside(e){if(e.target===document.getElementById('price-modal')) closePricing();}
 
 // ════════════════════ INIT ════════════════════
-window
+window.addEventListener('DOMContentLoaded',()=>{
+  initCityCanvas();
+  initHeadline();
+  initScrollReveals();
+  initScrollProgress();
+  initCardGlow();
+  resetPhoneChat();
+  renderAddons();renderMonthly();
+  updateNav('landing');
+});
+</script>
+</body>
+</html> 
