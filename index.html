@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Web Insider — See Your Business Live</title>
+<script src="https://js.stripe.com/v3/"></script>  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-<script src="https://js.stripe.com/v3/"></script>
 <style>
 /* ─── VARS ─── */
 :root {
@@ -157,12 +157,10 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 .lp-btn-g{font-family:var(--fD);font-weight:500;font-size:16px;color:rgba(255,255,255,0.6);background:none;border:1.5px solid rgba(255,255,255,0.15);padding:19px 32px;border-radius:100px;cursor:pointer;transition:all 0.22s;letter-spacing:-0.01em}
 .lp-btn-g:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
 .lp-scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;z-index:3;opacity:0;animation:lpFU 1s ease 2s forwards}
-.lp-scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;z-index:3;opacity:0;animation:lpScrollFU 1s ease 2s forwards}
 .lp-sline{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);animation:lpSA 2.5s ease-in-out infinite}
 @keyframes lpSA{0%,100%{transform:scaleY(0.7);opacity:0.2}50%{transform:scaleY(1.1);opacity:0.7}}
 .lp-slbl{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);font-family:var(--fL)}
 @keyframes lpFU{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes lpScrollFU{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 /* Counter Strip */
 .lp-strip{position:relative;z-index:5;background:rgba(255,255,255,0.025);border-top:1px solid rgba(255,255,255,0.055);border-bottom:1px solid rgba(255,255,255,0.055);padding:28px 48px;display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
@@ -476,164 +474,299 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 .cw{max-width:820px;margin:52px auto 0;background:var(--white);border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.06),0 0 0 1px var(--g200);overflow-x:auto}
 .ct{width:100%;border-collapse:collapse;min-width:520px}
 .ct th{padding:20px 16px;text-align:center;font-family:var(--fD);font-weight:700;font-size:14px;border-bottom:1px solid var(--g200)}
-.ct th{padding:20px 16px;text-align:center;font-family:var(--fD);font-weight:700;font-size:14px;border-bottom:1px solid var(--g200);color:var(--black)}
 .ct th:first-child{text-align:left;background:var(--g100)}.ct th.wi{background:var(--black);color:white}
 .ct td{padding:13px 16px;font-family:var(--fL);font-size:13px;border-bottom:1px solid var(--g200);color:var(--g600);text-align:center}
 .ct td:first-child{text-align:left;font-weight:600;color:var(--black);background:var(--g50)}
-.pay-notice{font-family:var(--fL);font-size:12px;color:var(--g400);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
-.pay-submit{width:100%;font-family:var(--fD);font-weight:700;font-size:17px;color:var(--white);background:var(--black);border:none;padding:18px;border-radius:14px;cursor:pointer;transition:all 0.28s cubic-bezier(.34,1.56,.64,1);letter-spacing:-0.01em;margin-top:8px}
-.pay-submit:hover{background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
+.ct td.wi{background:rgba(0,0,0,0.015);color:var(--black);font-weight:600;font-family:var(--fB)}
+.ct tr:last-child td{border-bottom:none}.ct tr:hover td{background:var(--g100)}.ct tr:hover td:first-child{background:var(--g100)}.ct tr:hover td.wi{background:rgba(0,0,0,0.03)}
+.cyes{color:#22c55e;font-size:16px}.cno{color:#ef4444;font-size:16px}.cwrn{color:#f59e0b;font-weight:600;font-size:12px}
+.final{max-width:580px;margin:72px auto 0;text-align:center;padding-bottom:40px}
+.final-title{font-family:var(--fD);font-weight:700;font-size:clamp(32px,5.5vw,60px);letter-spacing:-0.04em;line-height:1.05;color:var(--black);margin-bottom:14px}
+.final-quote{font-family:var(--fL);font-size:18px;color:var(--g600);font-weight:300;line-height:1.65;margin-bottom:36px;font-style:italic}
+.final-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.final-btns .btn-prim{background:var(--black);color:var(--white)}
+.final-btns .btn-prim:hover{background:var(--accent)}
+.btn-consult{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black);background:none;border:1.5px solid var(--g200);padding:19px 32px;border-radius:100px;cursor:pointer;transition:all 0.22s;letter-spacing:-0.01em;max-width:320px;text-align:center}
+.btn-consult:hover{border-color:var(--accent);color:var(--accent)}
 
-/* ─── FEATURE SIDE PANEL DRAWER ─── */
-#feat-drawer-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 9900;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-}
-#feat-drawer-overlay.open {
-  opacity: 1;
-  pointer-events: all;
-}
-#feat-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 480px;
-  max-width: 90vw;
-  height: 100vh;
-  background: var(--white);
-  color: var(--black);
-  z-index: 9910;
-  box-shadow: -10px 0 40px rgba(0,0,0,0.15);
-  transform: translateX(100%);
-  transition: transform 0.4s cubic-bezier(.22, 1, .36, 1);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-#feat-drawer.open {
-  transform: translateX(0);
-}
-.drawer-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--g100);
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-  color: var(--black);
-  z-index: 10;
-}
-.drawer-close:hover {
-  background: var(--g200);
-}
-.drawer-header {
-  padding: 36px 36px 20px;
-  border-bottom: 1px solid var(--g200);
-}
-.drawer-icon {
-  font-size: 36px;
-  display: block;
-  margin-bottom: 12px;
-}
-.drawer-title {
-  font-family: var(--fD);
-  font-weight: 700;
-  font-size: 24px;
-  letter-spacing: -0.03em;
-  color: var(--black);
-  margin-bottom: 4px;
-}
-.drawer-subtitle {
-  font-family: var(--fB);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-.drawer-body {
-  flex: 1;
-  padding: 24px 36px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-.drawer-demo-box {
-  background: var(--g100);
-  border: 1px solid var(--g200);
-  border-radius: 16px;
-  padding: 20px;
-  min-height: 200px;
-  position: relative;
-  overflow: hidden;
-}
-.drawer-info-box {
-  display: flex;
-  flex-direction: column;
-}
-.chat-chip {
-  background: var(--white);
-  border: 1px solid var(--g200);
-  border-radius: 100px;
-  padding: 6px 12px;
-  font-size: 11px;
-  font-family: var(--fB);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: var(--black);
-}
-.chat-chip:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.rev-star:hover {
-  transform: scale(1.15);
-}
-/* Order Summary */
-.pay-summary{background:var(--white);border-radius:22px;padding:32px;border:1px solid var(--g200);position:sticky;top:82px}
-.pay-sum-title{font-family:var(--fD);font-weight:700;font-size:18px;letter-spacing:-0.03em;color:var(--black);margin-bottom:24px}
+<script src="https://js.stripe.com/v3/"></script>
+
+  <style>
+  /* ═══════════════════════════════════
+     PAYMENT PAGE STYLES
+  ═══════════════════════════════════ */
+  #pg-payment{background:var(--g50);padding:88px 24px 80px;min-height:100%}
+  .pay-wrap{max-width:960px;margin:0 auto}
+  .pay-header{text-align:center;margin-bottom:52px}
+  .pay-back{font-family:var(--fB);font-size:14px;color:var(--g400);background:none;border:none;cursor:pointer;padding:8px 0;margin-bottom:24px;display:flex;align-items:center;gap:6px;transition:color 0.2s;justify-content:center;width:100%}
+  .pay-back:hover{color:var(--black)}
+  .pay-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
+  @media(max-width:800px){.pay-grid{grid-template-columns:1fr}}
+  .pay-form-wrap{background:var(--white);border-radius:22px;padding:36px;border:1px solid var(--g200)}
+  .pay-form-title{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--black);margin-bottom:28px}
+  .pay-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:480px){.pay-row{grid-template-columns:1fr}}
+  .pay-field-wrap{margin-bottom:18px}
+  .pay-label{font-family:var(--fB);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--g400);display:block;margin-bottom:8px}
+  .pay-input{width:100%;font-family:var(--fB);font-size:15px;color:var(--black);background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;outline:none;transition:border-color 0.25s;appearance:none}
+  .pay-input:focus{border-color:var(--accent)}
+  .pay-input::placeholder{color:var(--g400)}
+
+  /* ─── LIVE STRIPE CARD MOUNT CONTAINER ─── */
+  #stripe-card-element {
+    width: 100%;
+    background: var(--g50);
+    border: 1.5px solid var(--g200);
+    border-radius: 12px;
+    padding: 16px;
+    outline: none;
+    min-height: 52px;
+    margin-bottom: 18px;
+    box-sizing: border-box;
+  }
+  #stripe-card-element.StripeElement--focus {
+    border-color: var(--accent);
+  }
+
+  .pay-billing-toggle{display:flex;background:var(--g100);border-radius:100px;padding:5px;gap:4px;margin-bottom:24px}
+  .pay-tog-btn{flex:1;font-family:var(--fD);font-weight:700;font-size:14px;padding:11px;border-radius:100px;border:none;cursor:pointer;background:none;color:var(--g400);transition:all 0.3s;text-align:center}
+  .pay-tog-btn.on{background:var(--white);color:var(--black);box-shadow:0 2px 10px rgba(0,0,0,0.08)}
+  .pay-notice{font-family:var(--fL);font-size:12px;color:var(--g400);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
+  .pay-submit{width:100%;font-family:var(--fD);font-weight:700;font-size:17px;color:var(--white);background:var(--black);border:none;padding:18px;border-radius:14px;cursor:pointer;transition:all 0.28s cubic-bezier(.34,1.56,.64,1);letter-spacing:-0.01em;margin-top:8px}
+  .pay-submit:hover{background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
+  
+  /* Order Summary */
+  .pay-summary{background:var(--white);border-radius:22px;padding:32px;border:1px solid var(--g200);position:sticky;top:82px}
+  .pay-sum-title{font-family:var(--fD);font-weight:700;font-size:18px;letter-spacing:-0.03em;color:var(--black);margin-bottom:24px}
+  .pay-plan-badge{display:flex;align-items:center;gap:12px;background:var(--g50);border-radius:14px;padding:16px;margin-bottom:20px;border:1px solid var(--g200)}
+  .pay-plan-icon{width:44px;height:44px;border-radius:12px;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .pay-plan-name{font-family:var(--fD);font-weight:700;font-size:17px;color:var(--black)}
+  .pay-plan-desc{font-family:var(--fL);font-size:12px;color:var(--g400);margin-top:2px}
+  .pay-line{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g200);font-family:var(--fL);font-size:13px}
+  .pay-line:last-of-type{border-bottom:none}
+  .pay-line-nm{color:var(--black);font-weight:500}
+  .pay-line-val{color:var(--g600);font-family:var(--fD);font-weight:600;font-size:13px}
+  .pay-total-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;margin-top:4px;border-top:2px solid var(--black)}
+  .pay-total-lbl{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black)}
+  .pay-total-val{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--accent)}
+  .pay-guarantee{display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px;margin-top:20px}
+  .pay-guarantee-icon{font-size:22px;flex-shrink:0}
+  .pay-guarantee-txt{font-family:var(--fL);font-size:12px;color:var(--g600);line-height:1.5}
+  
+  .pay-success{display:none;text-align:center;padding:60px 24px;max-width:520px;margin:0 auto}
+  .pay-success.show{display:block}
+  .pay-success-icon{font-size:64px;display:block;margin-bottom:24px;animation:successPop 0.6s cubic-bezier(.22,1,.56,1) forwards}
+  @keyframes successPop{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .pay-success-title{font-family:var(--fD);font-weight:700;font-size:32px;letter-spacing:-0.04em;color:var(--black);margin-bottom:12px}
+  .pay-success-sub{font-family:var(--fL);font-size:16px;color:var(--g600);line-height:1.7;margin-bottom:32px}
+
+  footer{background:var(--near-black);color:rgba(255,255,255,0.5);text-align:center;padding:28px 24px;font-family:var(--fL);font-size:12px}
+  footer strong{color:white;font-family:var(--fD);font-weight:700}
+  </style>
+</head>
+<body>
+
+<div class="page" id="pg-payment">
+  <div class="pay-wrap">
+    <div id="payMain">
+      <div class="pay-header">
+        <button class="pay-back" onclick="goPageSafe('tiers')">← Back to Plans</button>
+        <p class="sec-eye">Complete Your Order</p>
+        <h2 class="sec-title" id="payTitle">You're almost there.</h2>
+        <p class="sec-sub">Review your plan and complete your purchase below.</p>
+      </div>
+      <div class="pay-grid">
+        <div class="pay-form-wrap">
+          <div class="pay-form-title">Your Information</div>
+          <div class="pay-row">
+            <div class="pay-field-wrap">
+              <label class="pay-label">First Name</label>
+              <input class="pay-input" type="text" placeholder="Mike" id="pay-fname">
+            </div>
+            <div class="pay-field-wrap">
+              <label class="pay-label">Last Name</label>
+              <input class="pay-input" type="text" placeholder="Johnson" id="pay-lname">
+            </div>
+          </div>
+          <div class="pay-field-wrap">
+            <label class="pay-label">Email Address</label>
+            <input class="pay-input" type="email" placeholder="mike@yourbusiness.com" id="pay-email">
+          </div>
+          <div class="pay-field-wrap">
+            <label class="pay-label">Phone Number</label>
+            <input class="pay-input" type="tel" placeholder="(718) 555-0100" id="pay-phone">
+          </div>
+
+          <div class="pay-form-title" style="margin-top:28px">Payment Schedule</div>
+          <div class="pay-billing-toggle">
+            <button class="pay-tog-btn on" id="ptog-full" onclick="setPaySchedule('full',this)">Pay in Full</button>
+            <button class="pay-tog-btn" id="ptog-split" onclick="setPaySchedule('split',this)">Split 50/50</button>
+          </div>
+          <div id="payScheduleNote" style="font-family:var(--fL);font-size:13px;color:var(--g400);margin-bottom:20px;line-height:1.6"></div>
+
+          <div class="pay-form-title">Payment Details</div>
+          <div class="pay-field-wrap">
+            <label class="pay-label">Name on Card</label>
+            <input class="pay-input" type="text" placeholder="Mike Johnson" id="pay-cardname">
+          </div>
+
+          <div id="stripe-card-element"></div>
+
+          <div class="pay-notice">🔒 Payments are encrypted and secure</div>
+          <button class="pay-submit" id="paySubmitBtn" onclick="executePayment()">Complete Purchase →</button>
+        </div>
+
+        <div class="pay-summary" id="paySummary">
+          <div class="pay-sum-title">Order Summary</div>
+          <div class="pay-plan-badge">
+            <div class="pay-plan-icon" id="payPlanIcon">🚀</div>
+            <div>
+              <div class="pay-plan-name" id="payPlanName">Starter Plan</div>
+              <div class="pay-plan-desc" id="payPlanDesc">1–3 pages · AI Chat · 7 days</div>
+            </div>
+          </div>
+          <div id="payLineItems"></div>
+          <div class="pay-total-row">
+            <div class="pay-total-lbl" id="payTotalLbl">Due Today</div>
+            <div class="pay-total-val" id="payTotalVal">$499</div>
+          </div>
+          <div class="pay-guarantee">
+            <span class="pay-guarantee-icon">🛡️</span>
+            <div class="pay-guarantee-txt">Satisfaction guaranteed. If we can't deliver what we promised, you get your money back — no questions asked.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pay-success" id="paySuccess">
+      <span class="pay-success-icon">🎉</span>
+      <div class="pay-success-title">You're in. Let's build.</div>
+      <div class="pay-success-sub">Your order is confirmed. Our team will reach out within 24 hours to kick off your project. Check your email for your receipt and next steps.</div>
+      <button class="btn-prim" style="margin-top:32px" onclick="location.reload()">Back to Home</button>
+    </div>
   </div>
 </div>
 
-<!-- ════════════ FEATURE SIDE DRAWER PANEL ════════════ -->
-<div id="feat-drawer-overlay" onclick="closeFeatureDemo()"></div>
-<div id="feat-drawer">
-  <button class="drawer-close" onclick="closeFeatureDemo()">✕</button>
-  <div class="drawer-header">
-    <span class="drawer-icon" id="dr-icon">🤖</span>
-    <h2 class="drawer-title" id="dr-title">Feature Title</h2>
-    <p class="drawer-subtitle" id="dr-subtitle">How it works</p>
+<script src="script.js"></script>
+
+<!-- ─── NAV ─── -->
+<nav id="mainNav">
+  <span class="nav-logo" onclick="navHome()">Web<b>Insider</b></span>
+  <div class="nav-links">
+    <button class="nav-link active-nl" id="navHomeBtn" onclick="navHome()">Home</button>
+    <button class="nav-link" onclick="openPricing()">Pricing</button>
+    <button class="nav-link" style="color:var(--g400);cursor:not-allowed" title="Coming soon">Support</button>
   </div>
-  <div class="drawer-body">
-    <!-- Interactive demo container -->
-    <div class="drawer-demo-box" id="dr-demo-content"></div>
-    <!-- Detailed value proposition info -->
-    <div class="drawer-info-box">
-      <h3 style="font-family:var(--fD); font-size:16px; margin-bottom:8px; color:var(--black);">Why it matters</h3>
-      <p id="dr-value-prop" style="font-family:var(--fL); font-size:13px; color:var(--g600); line-height:1.6; margin-bottom:18px;">Detailed business impact goes here.</p>
-      
-      <h3 style="font-family:var(--fD); font-size:16px; margin-bottom:8px; color:var(--black);">What it does for you</h3>
-      <ul id="dr-bullets" style="font-family:var(--fL); font-size:13px; color:var(--g600); line-height:1.6; padding-left:20px; list-style-type:disc; margin: 0;">
-        <!-- Bullet points -->
-      </ul>
+  <div class="nav-right">
+    <div class="nav-price" id="navPrice">$499</div>
+    <button class="nav-cta" id="buildBtn" onclick="navBuildSite()">Build My Site →</button>
+  </div>
+</nav>
+
+<!-- ─── PROGRESS ─── -->
+<div id="pbar"><div id="pfill"></div></div>
+<div id="scroll-prog"></div>
+
+<!-- ═══════════ WARNING MODAL ═══════════ -->
+<div id="warn-modal">
+  <div class="warn-box">
+    <span class="warn-icon">⚠️</span>
+    <div class="warn-title">Hold on — you'll lose your progress</div>
+    <div class="warn-sub">Leaving now will erase your survey answers and site preview. You'll have to start from scratch.</div>
+    <div class="warn-btns">
+      <button class="warn-stay" onclick="closeWarn()">Stay & Continue Building</button>
+      <button class="warn-leave" id="warnLeaveBtn" onclick="confirmLeave()">Leave Anyway</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ BOOKING MODAL ═══════════ -->
+<div id="book-modal" onclick="closeBookOutside(event)">
+  <div class="book-sheet">
+    <button class="book-close" onclick="closeBook()">✕</button>
+    <div class="book-handle"></div>
+    <div id="book-form-wrap">
+      <h2 class="book-title">Book a free call.</h2>
+      <p class="book-sub">We'll talk through your goals, your business, and what the right site looks like for you — no pressure, no pitch.</p>
+      <div class="book-form">
+        <div>
+          <label class="book-label">First Name</label>
+          <input class="book-input" type="text" placeholder="Mike" id="book-fname">
+        </div>
+        <div>
+          <label class="book-label">Last Name</label>
+          <input class="book-input" type="text" placeholder="Johnson" id="book-lname">
+        </div>
+        <div class="full">
+          <label class="book-label">Phone Number</label>
+          <input class="book-input" type="tel" placeholder="(718) 555-0100" id="book-phone">
+        </div>
+        <div class="full">
+          <label class="book-label">Business Name</label>
+          <input class="book-input" type="text" placeholder="Your business" id="book-biz">
+        </div>
+        <div class="full">
+          <label class="book-label">Best Time to Reach You</label>
+          <select class="book-select" id="book-time">
+            <option value="">Select a time window...</option>
+            <option>Morning (9am – 12pm)</option>
+            <option>Afternoon (12pm – 4pm)</option>
+            <option>Evening (4pm – 7pm)</option>
+            <option>Anytime works</option>
+          </select>
+        </div>
+        <div class="full">
+          <label class="book-label">Anything else? (optional)</label>
+          <textarea class="book-textarea" placeholder="Tell us a bit about your business or what you're looking for..." id="book-msg"></textarea>
+        </div>
+        <div class="full">
+          <button class="book-submit" onclick="submitBook()">Request My Free Call →</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-success" id="book-success">
+      <span class="book-success-icon">✅</span>
+      <div class="book-success-title">You're on the list.</div>
+      <div class="book-success-sub">We'll reach out within 24 hours to confirm your call time. Talk soon.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PRICING MODAL ═══════════ -->
+<div id="price-modal" onclick="closePricingOutside(event)">
+  <div class="pm-sheet">
+    <button class="pm-close" onclick="closePricing()">✕</button>
+    <div class="pm-handle"></div>
+    <h2 class="pm-title">Simple, honest pricing.</h2>
+    <p class="pm-sub">Every plan includes a custom AI assistant. No templates, no limits on support.</p>
+    <div class="pm-cards">
+      <div class="pm-card">
+        <div class="pm-cnm">Starter</div><div class="pm-cpr">$499</div>
+        <div class="pm-cf">1–3 pages · Mobile responsive · AI Chat · Contact form + Maps · Basic SEO · Delivered in 7 days</div>
+      </div>
+      <div class="pm-card pop">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px">Most Popular</div>
+        <div class="pm-cnm" style="color:white">Pro</div><div class="pm-cpr">$899</div>
+        <div class="pm-cf">Up to 6 pages · Custom premium design · Photo gallery · Full SEO · AI Chat · Delivered in 10 days</div>
+      </div>
+      <div class="pm-card">
+        <div class="pm-cnm">Premium</div><div class="pm-cpr">$1,499</div>
+        <div class="pm-cf">Unlimited pages · All 6 AI features · Custom logo · Online booking · Unlimited revisions · Priority 7-day delivery</div>
+      </div>
+    </div>
+    <h3 class="pm-addons-title">AI Marketing Add-ons</h3>
+    <div class="pm-addon-row"><span class="pm-addon-nm">🤖 AI Chat Assistant</span><span class="pm-addon-pr">Included in all plans</span></div>
+    <div class="pm-addon-row"><span class="pm-addon-nm">🎯 AI Lead Qualifier</span><span class="pm-addon-pr">+$79 one-time</span></div>
+    <div class="pm-addon-row"><span class="pm-addon-nm">💡 Smart Behavior Popups</span><span class="pm-addon-pr">+$99 one-time</span></div>
+    <div class="pm-addon-row"><span class="pm-addon-nm">📍 Hyper-Local SEO Content</span><span class="pm-addon-pr">+$149 one-time</span></div>
+    <div class="pm-addon-row"><span class="pm-addon-nm">⭐ Review Collection System</span><span class="pm-addon-pr">+$79 one-time</span></div>
+    <div class="pm-addon-row"><span class="pm-addon-nm">📦 Full AI Marketing Bundle</span><span class="pm-addon-pr">$399 (save $78)</span></div>
+    <h3 class="pm-monthly-title">Monthly AI Upkeep</h3>
+    <div class="pm-addon-row"><span class="pm-addon-nm">🔄 Basic — AI updates</span><span class="pm-addon-pr">$29/mo</span></div>
+    <div class="pm-addon-row"><span class="pm-addon-nm">🔄 Pro — Updates + lead reports + review drafts</span><span class="pm-addon-pr">$49/mo</span></div>
+    <div class="pm-addon-row"><span class="pm-addon-nm">🔄 Premium — Priority support + quarterly refresh</span><span class="pm-addon-pr">$99/mo</span></div>
+    <div style="margin-top:28px;text-align:center">
+      <button class="btn-prim" onclick="closePricing();navBuildSite()">Build My Site Preview →</button>
     </div>
   </div>
 </div>
@@ -667,7 +800,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
     <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="100" data-suffix="%">0%</div><div class="lp-cnt-lbl">Bronx-Based</div></div>
   </div>
 
-
   <!-- Phone Section -->
   <section class="lp-phone-sec">
     <p class="lp-sec-eye sr h">AI Built In From Day One</p>
@@ -682,7 +814,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
             <div><div class="phone-name">AI Assistant</div><div class="phone-status">Online now</div></div>
           </div>
           <div class="phone-msgs" id="phoneMsgs">
-          <div class="phone-msgs" id="phoneMsgs" style="height: calc(100% - 110px); overflow-y: auto;">
             <div class="pmsg u" id="pm1">Hey, are you open on weekends?</div>
             <div class="ptyping" id="pt1"><div class="td"></div><div class="td"></div><div class="td"></div></div>
             <div class="pmsg a" id="pm2">Yes! We're open Sat–Sun 9am–5pm. Want to book a spot?</div>
@@ -692,13 +823,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
             <div class="pmsg u" id="pm5">Do you offer payment plans?</div>
             <div class="ptyping" id="pt3"><div class="td"></div><div class="td"></div><div class="td"></div></div>
             <div class="pmsg a" id="pm6">We do! Most clients split into 2–3 payments. Want me to have someone reach out today? 😊</div>
-          </div>
-          <!-- Interactive Suggestion Chips -->
-          <div class="phone-chips" id="phoneChips" style="display: flex; gap: 4px; padding: 6px 8px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.05); overflow-x: auto; white-space: nowrap; scrollbar-width: none; height: 52px; align-items: center;">
-            <button class="pchip" onclick="triggerInteractiveLandingChat('Are you open weekends?', 'Yes! We\'re open Sat–Sun 9am–5pm. Want to book a spot?')">Open weekends?</button>
-            <button class="pchip" onclick="triggerInteractiveLandingChat('Do you offer payment plans?', 'Yes! We offer 50/50 split payment plans on all custom packages. 😊')">Payment plans?</button>
-            <button class="pchip" onclick="triggerInteractiveLandingChat('What is average delivery?', 'Avg delivery is 1-2 weeks for Starter and 2-3 weeks for Pro/Premium plans.')">Delivery time?</button>
-            <button class="pchip" onclick="triggerInteractiveLandingChat('Can I custom design?', 'Absolutely! Our Pro and Premium packages include fully customized premium designs.')">Custom designs?</button>
           </div>
         </div>
       </div>
@@ -720,12 +844,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
         <div class="lp-fc sr h" style="transition-delay:0.26s"><span class="lp-fc-icon">💡</span><div class="lp-fc-title">Smart Behavior Popups</div><div class="lp-fc-desc">Fires a perfectly-timed offer when a visitor is about to leave. Turns bounces into bookings.</div><span class="lp-fc-tag">Add-on</span></div>
         <div class="lp-fc sr h" style="transition-delay:0.33s"><span class="lp-fc-icon">⭐</span><div class="lp-fc-title">Review Collection</div><div class="lp-fc-desc">Automatically asks happy customers for Google reviews after their visit. Builds reputation on autopilot.</div><span class="lp-fc-tag">Add-on</span></div>
         <div class="lp-fc sr h" style="transition-delay:0.4s"><span class="lp-fc-icon">📅</span><div class="lp-fc-title">Online Booking</div><div class="lp-fc-desc">Customers book directly from your site. No phone tag, no back-and-forth. Calendar fills itself.</div><span class="lp-fc-tag">Premium</span></div>
-        <div class="lp-fc sr h" style="transition-delay:0.05s" onclick="openFeatureDemo('chat')"><span class="lp-fc-icon">🤖</span><div class="lp-fc-title">AI Chat Assistant</div><div class="lp-fc-desc">Answers customer questions instantly, 24/7. Never lose a lead because you were busy or asleep.</div><span class="lp-fc-tag">Included Free</span></div>
-        <div class="lp-fc sr h" style="transition-delay:0.12s" onclick="openFeatureDemo('lead')"><span class="lp-fc-icon">🎯</span><div class="lp-fc-title">AI Lead Qualifier</div><div class="lp-fc-desc">Captures name, number, and what they need — before they even call you.</div><span class="lp-fc-tag">Add-on</span></div>
-        <div class="lp-fc sr h" style="transition-delay:0.19s" onclick="openFeatureDemo('seo')"><span class="lp-fc-icon">📍</span><div class="lp-fc-title">Hyper-Local SEO</div><div class="lp-fc-desc">Show up when people in your neighborhood search. Built for the Bronx, Brooklyn, wherever you are.</div><span class="lp-fc-tag">Add-on</span></div>
-        <div class="lp-fc sr h" style="transition-delay:0.26s" onclick="openFeatureDemo('popups')"><span class="lp-fc-icon">💡</span><div class="lp-fc-title">Smart Behavior Popups</div><div class="lp-fc-desc">Fires a perfectly-timed offer when a visitor is about to leave. Turns bounces into bookings.</div><span class="lp-fc-tag">Add-on</span></div>
-        <div class="lp-fc sr h" style="transition-delay:0.33s" onclick="openFeatureDemo('reviews')"><span class="lp-fc-icon">⭐</span><div class="lp-fc-title">Review Collection</div><div class="lp-fc-desc">Automatically asks happy customers for Google reviews after their visit. Builds reputation on autopilot.</div><span class="lp-fc-tag">Add-on</span></div>
-        <div class="lp-fc sr h" style="transition-delay:0.4s" onclick="openFeatureDemo('booking')"><span class="lp-fc-icon">📅</span><div class="lp-fc-title">Online Booking</div><div class="lp-fc-desc">Customers book directly from your site. No phone tag, no back-and-forth. Calendar fills itself.</div><span class="lp-fc-tag">Premium</span></div>
       </div>
     </div>
   </section>
@@ -738,26 +856,15 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#081a08,#0c2e16)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Home Services</div><div class="reel-title">We Fix It.<br>Fast.</div><div class="reel-sub">Free estimates · 24/7</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0018,#360036)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Health & Wellness</div><div class="reel-title">Feel Better.<br>Start Today.</div><div class="reel-sub">Book sessions · Memberships</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1000,#3a2600)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Retail</div><div class="reel-title">Shop Local.<br>Ship Fast.</div><div class="reel-sub">Online store · Curbside</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1a1a,#2a2a2a)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#0055ff">Vibe Theme</div><div class="reel-title">Sleek. Modern.<br>No Clutter.</div><div class="reel-sub">Clean & Minimal · AI Live Chat</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#120024,#2a004f)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#a855f7">Vibe Theme</div><div class="reel-title">Loud. Proud.<br>Unforgettable.</div><div class="reel-sub">Bold & Energetic · Custom Grid</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#3d1c10,#5c2d1e)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#d97706">Vibe Theme</div><div class="reel-title">Friendly. Local.<br>Trusted.</div><div class="reel-sub">Warm & Welcoming · Serif Vibe</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#0f0f0f,#1e1b10)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#d4af37">Vibe Theme</div><div class="reel-title">Elegant. Refined.<br>High-End.</div><div class="reel-sub">Luxury & Premium · Serif Accents</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#020b18,#051a36)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#00d4ff">Vibe Theme</div><div class="reel-title">Digital. Sleek.<br>Advanced.</div><div class="reel-sub">Tech-forward & Modern · Glow Grid</div></div></div>
       <!-- Duplicated for seamless loop -->
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0800,#3d1800)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Barbershop</div><div class="reel-title">Fresh Cuts<br>Every Time</div><div class="reel-sub">Book online · AI chat live</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#000d1a,#001840)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Restaurant</div><div class="reel-title">Reserve Your<br>Table Tonight</div><div class="reel-sub">Menu live · Order direct</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#081a08,#0c2e16)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Home Services</div><div class="reel-title">We Fix It.<br>Fast.</div><div class="reel-sub">Free estimates · 24/7</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0018,#360036)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Health & Wellness</div><div class="reel-title">Feel Better.<br>Start Today.</div><div class="reel-sub">Book sessions · Memberships</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1000,#3a2600)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Retail</div><div class="reel-title">Shop Local.<br>Ship Fast.</div><div class="reel-sub">Online store · Curbside</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1a1a,#2a2a2a)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#0055ff">Vibe Theme</div><div class="reel-title">Sleek. Modern.<br>No Clutter.</div><div class="reel-sub">Clean & Minimal · AI Live Chat</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#120024,#2a004f)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#a855f7">Vibe Theme</div><div class="reel-title">Loud. Proud.<br>Unforgettable.</div><div class="reel-sub">Bold & Energetic · Custom Grid</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#3d1c10,#5c2d1e)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#d97706">Vibe Theme</div><div class="reel-title">Friendly. Local.<br>Trusted.</div><div class="reel-sub">Warm & Welcoming · Serif Vibe</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#0f0f0f,#1e1b10)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#d4af37">Vibe Theme</div><div class="reel-title">Elegant. Refined.<br>High-End.</div><div class="reel-sub">Luxury & Premium · Serif Accents</div></div></div>
-      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#020b18,#051a36)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#00d4ff">Vibe Theme</div><div class="reel-title">Digital. Sleek.<br>Advanced.</div><div class="reel-sub">Tech-forward & Modern · Glow Grid</div></div></div>
     </div>
     <div class="reel-edge-l"></div><div class="reel-edge-r"></div>
     <div class="reel-ot"><h2>Every industry.<br><span>One platform.</span></h2></div>
-    <div class="reel-ot"><h2>Five custom themes.<br><span>Choose your vibe.</span></h2></div>
   </section>
 
   <!-- CTA Section -->
@@ -766,14 +873,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
     <p class="lp-cta-sub sr h" style="transition-delay:0.12s">Answer 6 quick questions. Get a real preview of your site — built for your business, before spending a dollar.</p>
     <button class="lp-cta-btn sr h" style="transition-delay:0.22s" onclick="navBuildSite()">Build My Free Preview →</button>
   </section>
-
-  <!-- Counter Strip -->
-  <div class="lp-strip sr h" style="border-bottom:none; border-top:1px solid rgba(255,255,255,0.055);">
-    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="47" data-suffix="+">0+</div><div class="lp-cnt-lbl">Sites Built</div></div>
-    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="6" data-suffix="">0</div><div class="lp-cnt-lbl">Industries</div></div>
-    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="10" data-suffix=" Days">0 Days</div><div class="lp-cnt-lbl">Avg Delivery</div></div>
-    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="100" data-suffix="%">0%</div><div class="lp-cnt-lbl">Bronx-Based</div></div>
-  </div>
 
   <div class="lp-footer"><p><strong>Web Insider</strong> &nbsp;·&nbsp; hello@webinsider.co &nbsp;·&nbsp; webinsider.co &nbsp;·&nbsp; Built in the Bronx</p></div>
 </div>
@@ -831,7 +930,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
         <button class="tp" id="tp-premium" onclick="setTier('premium',this)">Premium</button>
       </div>
       <div class="tier-desc" id="tierDesc">1–3 pages · Mobile ready · AI Chat included · Delivered in 7 days</div>
-      <div class="tier-desc" id="tierDesc">1–3 pages · Mobile ready · AI Chat included · Delivered in 1-2 weeks</div>
       <div class="sublbl">What's included</div>
       <div class="feat-list" id="coreList"></div>
       <div class="sublbl">Add-ons</div>
@@ -889,23 +987,34 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Contact form + Google Maps</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Basic SEO setup</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Delivered in 7 days</span></div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">Delivered in 1-2 weeks</span></div>
       <div class="t-feat"><span class="tn">✗</span><span class="ft dim">Custom premium design</span></div>
       <div class="t-feat"><span class="tn">✗</span><span class="ft dim">Photo gallery</span></div>
       <div class="t-feat"><span class="tn">✗</span><span class="ft dim">AI Lead Qualifier</span></div>
+      <button class="t-cta" onclick="pickTier('starter')">Choose Starter</button>
+    </div>
+    <div class="tc hot" id="tc-pro">
+      <div class="t-badge">Most Popular</div>
+      <div class="t-nm">Pro</div><div class="t-pr">$899</div>
+      <div class="t-feat"><span class="tw">✓</span><span class="ft">Up to 6 pages, premium design</span></div>
+      <div class="t-feat"><span class="tw">✓</span><span class="ft">AI Chat Assistant 24/7</span></div>
       <div class="t-feat"><span class="tw">✓</span><span class="ft">Photo gallery + About page</span></div>
       <div class="t-feat"><span class="tw">✓</span><span class="ft">Full SEO + Google Reviews</span></div>
       <div class="t-feat"><span class="tw">✓</span><span class="ft">Custom logo + branding</span></div>
       <div class="t-feat"><span class="tw">✓</span><span class="ft">Delivered in 10 days</span></div>
-      <div class="t-feat"><span class="tw">✓</span><span class="ft">Delivered in 2-3 weeks</span></div>
       <div class="t-feat"><span class="tn" style="color:rgba(255,255,255,0.2)">✗</span><span class="ft dim">Online booking integration</span></div>
       <div class="t-feat"><span class="tn" style="color:rgba(255,255,255,0.2)">✗</span><span class="ft dim">Blog section</span></div>
       <button class="t-cta" onclick="pickTier('pro')">Choose Pro</button>
+    </div>
+    <div class="tc" id="tc-premium">
+      <div class="t-nm">Premium</div><div class="t-pr">$1,499</div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">Unlimited pages</span></div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">All 6 AI features</span></div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">Custom logo + branding</span></div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">Online booking integration</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Blog section included</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Unlimited revisions</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Quarterly site refresh</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Priority 7-day delivery</span></div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">Priority 2-3 week delivery</span></div>
       <button class="t-cta" onclick="pickTier('premium')">Choose Premium</button>
     </div>
   </div>
@@ -1019,11 +1128,10 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
           <div id="stripe-card-element">
             <div class="stripe-placeholder">Card details go here — connect Stripe above</div>
           </div>
-          <div id="card-errors" role="alert" style="color: #ef4444; font-family: var(--fL); font-size: 13px; margin-top: -10px; margin-bottom: 18px; display: none;"></div>
           <!-- END STRIPE CARD ELEMENT -->
 
           <div class="pay-notice">🔒 Payments are encrypted and secure</div>
-          <button class="pay-submit" id="paySubmitBtn" onclick="submitPayment()">Complete Purchase →</button>
+          <button class="pay-submit" id="paySubmitBtn" onclick="fakeSubmit()">Complete Purchase →</button>
         </div>
 
         <!-- Order Summary -->
@@ -1034,7 +1142,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
             <div>
               <div class="pay-plan-name" id="payPlanName">Starter Plan</div>
               <div class="pay-plan-desc" id="payPlanDesc">1–3 pages · AI Chat · 7 days</div>
-              <div class="pay-plan-desc" id="payPlanDesc">1–3 pages · AI Chat · 1-2 weeks</div>
             </div>
           </div>
           <div id="payLineItems"></div>
@@ -1075,9 +1182,6 @@ const TIER_DESCS={
   starter:'1–3 pages · Mobile ready · AI Chat included · Delivered in 7 days',
   pro:'Up to 6 pages · Premium design · Photo gallery · Full SEO · Delivered in 10 days',
   premium:'Unlimited pages · All 6 AI features · Custom logo · Booking · Priority 7-day delivery'
-  starter:'1–3 pages · Mobile ready · AI Chat included · Delivered in 1-2 weeks',
-  pro:'Up to 6 pages · Premium design · Photo gallery · Full SEO · Delivered in 2-3 weeks',
-  premium:'Unlimited pages · All 6 AI features · Custom logo · Booking · Priority 2-3 week delivery'
 };
 const TIER_TABS={
   starter:['home','services','contact'],
@@ -1146,25 +1250,8 @@ function goPage(name){
 // Safe nav — warns if in flow
 function goPageSafe(name){
   if(isInFlow()){
-    const isTargetInFlow = ['survey', 'builder', 'demo', 'tiers', 'compare', 'payment'].includes(name);
-    if (isTargetInFlow) {
-      if (currentPage === 'payment') {
-        const fname = document.getElementById('pay-fname')?.value.trim();
-        const lname = document.getElementById('pay-lname')?.value.trim();
-        const email = document.getElementById('pay-email')?.value.trim();
-        const phone = document.getElementById('pay-phone')?.value.trim();
-        const cardname = document.getElementById('pay-cardname')?.value.trim();
-        if (fname || lname || email || phone || cardname) {
-          pendingNav = name;
-          openWarn();
-          return;
-        }
-      }
-      goPage(name);
-    } else {
-      pendingNav = name;
-      openWarn();
-    }
+    pendingNav=name;
+    openWarn();
   } else {
     goPage(name);
   }
@@ -1210,13 +1297,10 @@ function confirmLeave(){
   document.getElementById('warn-modal').classList.remove('open');
   const dest=pendingNav||'landing';
   pendingNav=null;
-  const isDestInFlow = ['survey', 'builder', 'demo', 'tiers', 'compare', 'payment'].includes(dest);
-  if (!isDestInFlow) {
-    // Reset flow state only when leaving the flow entirely
-    S.goals=[];S.currentQ=0;S.bizName='';S.industry='';S.industryOther='';S.vibe='';S.vibeOther='';
-    S.hasWebsite='';S.bookings='';S.bookingsOther='';S.goalOther='';
-    S.tier='starter';S.addons={lead:false,popups:false,seo:false,reviews:false};S.monthly='none';
-  }
+  // Reset flow state
+  S.goals=[];S.currentQ=0;S.bizName='';S.industry='';S.industryOther='';S.vibe='';S.vibeOther='';
+  S.hasWebsite='';S.bookings='';S.bookingsOther='';S.goalOther='';
+  S.tier='starter';S.addons={lead:false,popups:false,seo:false,reviews:false};S.monthly='none';
   goPage(dest);
 }
 
@@ -1310,13 +1394,9 @@ function initScrollProgress(){
 
 // ════════════════════ PHONE CHAT ════════════════════
 let chatStarted=false,chatObserver=null;
-let chatTimers = [];
-let chatInterrupted = false;
-
 function startPhoneChat(){
   if(chatStarted) return;
   chatStarted=true;
-  chatInterrupted = false;
   const seq=[
     {id:'pm1',t:400,vis:true},{id:'pt1',t:900,vis:true},{id:'pt1',t:2100,vis:false},
     {id:'pm2',t:2200,vis:true},{id:'pm3',t:3500,vis:true},{id:'pt2',t:4000,vis:true},
@@ -1324,22 +1404,9 @@ function startPhoneChat(){
     {id:'pt3',t:7600,vis:true},{id:'pt3',t:9300,vis:false},{id:'pm6',t:9400,vis:true}
   ];
   seq.forEach(s=>setTimeout(()=>{const el=document.getElementById(s.id);if(el) el.classList.toggle('vis',s.vis);},s.t));
-  chatTimers.forEach(clearTimeout);
-  chatTimers = [];
-  seq.forEach(s=>{
-    const t = setTimeout(()=>{
-      if (chatInterrupted) return;
-      const el=document.getElementById(s.id);
-      if(el) el.classList.toggle('vis',s.vis);
-    },s.t);
-    chatTimers.push(t);
-  });
 }
 function resetPhoneChat(){
   chatStarted=false;
-  chatInterrupted = false;
-  chatTimers.forEach(clearTimeout);
-  chatTimers = [];
   ['pm1','pm2','pm3','pm4','pm5','pm6','pt1','pt2','pt3'].forEach(id=>{const el=document.getElementById(id);if(el) el.classList.remove('vis');});
   if(chatObserver) chatObserver.disconnect();
   const phone=document.querySelector('.phone-wrap');
@@ -1347,34 +1414,6 @@ function resetPhoneChat(){
     chatObserver=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){startPhoneChat();chatObserver.disconnect();}},{threshold:0.3});
     chatObserver.observe(phone);
   }
-}
-function triggerInteractiveLandingChat(userMsg, aiReply) {
-  chatInterrupted = true;
-  chatTimers.forEach(clearTimeout);
-  
-  const box = document.getElementById('phoneMsgs');
-  if (!box) return;
-
-  box.innerHTML = '';
-  box.innerHTML += `<div class="pmsg u vis" style="align-self: flex-end; background: var(--accent); color: var(--white); border-bottom-right-radius: 4px; opacity: 1; transform: translateY(0); max-width: 76%; padding: 7px 11px; border-radius: 14px; font-family: var(--fL); font-size: 10px; line-height: 1.45;">${userMsg}</div>`;
-  box.scrollTop = box.scrollHeight;
-
-  const typingId = 'ltyping-' + Date.now();
-  box.innerHTML += `
-    <div class="ptyping vis" id="${typingId}" style="display: flex; gap: 4px; align-items: center; padding: 9px 12px; background: rgba(255,255,255,0.07); border-radius: 14px; border-bottom-left-radius: 4px; align-self: flex-start; max-width: 58px;">
-      <div class="td" style="width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.38);"></div>
-      <div class="td" style="width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.38);"></div>
-      <div class="td" style="width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.38);"></div>
-    </div>`;
-  box.scrollTop = box.scrollHeight;
-
-  setTimeout(() => {
-    const typingEl = document.getElementById(typingId);
-    if (typingEl) typingEl.remove();
-
-    box.innerHTML += `<div class="pmsg a vis" style="align-self: flex-start; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border-bottom-left-radius: 4px; opacity: 1; transform: translateY(0); max-width: 76%; padding: 7px 11px; border-radius: 14px; font-family: var(--fL); font-size: 10px; line-height: 1.45;">${aiReply}</div>`;
-    box.scrollTop = box.scrollHeight;
-  }, 1200);
 }
 
 // ════════════════════ FEATURE CARD GLOW ════════════════════
@@ -1639,9 +1678,6 @@ const TIER_INFO={
   starter:{name:'Starter Plan',desc:'1–3 pages · AI Chat · 7 days',icon:'⚡',price:499},
   pro:{name:'Pro Plan',desc:'Up to 6 pages · Premium design · 10 days',icon:'🚀',price:899},
   premium:{name:'Premium Plan',desc:'Unlimited pages · All AI features · 7 days',icon:'👑',price:1499}
-  starter:{name:'Starter Plan',desc:'1–3 pages · AI Chat · 1-2 weeks',icon:'⚡',price:499},
-  pro:{name:'Pro Plan',desc:'Up to 6 pages · Premium design · 2-3 weeks',icon:'🚀',price:899},
-  premium:{name:'Premium Plan',desc:'Unlimited pages · All AI features · 2-3 weeks',icon:'👑',price:1499}
 };
 function buildPaymentPage(){
   const info=TIER_INFO[S.tier];
@@ -1679,538 +1715,15 @@ function setPaySchedule(type,btn){
     totalLbl.textContent='Due Today (50%)';totalVal.textContent='$'+half.toLocaleString();
   }
 }
-// ════════════════════ STRIPE INTEGRATION ════════════════════
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_51TaNhEKivGT2h1qLK9ejfkmHEnhWdZD7c7In6i3Njns5IIYJZtPG2paDvDhoIqv2rqZDd3LiEb7hGuJpRWt3snc8009jpbAwsB'; // Replace with your actual Stripe Publishable Key
-let stripe = null;
-let cardEl = null;
-
-function initStripe() {
-  if (typeof Stripe !== 'undefined') {
-    try {
-      stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-      const elements = stripe.elements();
-      cardEl = elements.create('card', {
-        style: {
-          base: {
-            fontFamily: 'Cabinet Grotesk, sans-serif',
-            fontSize: '15px',
-            color: '#080808',
-            '::placeholder': {
-              color: '#9898a8'
-            }
-          },
-          invalid: {
-            color: '#ef4444',
-            iconColor: '#ef4444'
-          }
-        }
-      });
-
-      // Remove the placeholder message and mount the card input element
-      const placeholder = document.querySelector('.stripe-placeholder');
-      if (placeholder) {
-        placeholder.remove();
-      }
-      cardEl.mount('#stripe-card-element');
-
-      // Handle real-time validation errors and focus styling
-      cardEl.on('change', (event) => {
-        const displayError = document.getElementById('card-errors');
-        const stripeWrapper = document.getElementById('stripe-card-element');
-        if (event.error) {
-          displayError.textContent = event.error.message;
-          displayError.style.display = 'block';
-          stripeWrapper.style.borderColor = '#ef4444';
-        } else {
-          displayError.textContent = '';
-          displayError.style.display = 'none';
-          stripeWrapper.style.borderColor = 'var(--g200)';
-        }
-      });
-
-      cardEl.on('focus', () => {
-        const displayError = document.getElementById('card-errors');
-        if (!displayError.textContent) {
-          document.getElementById('stripe-card-element').style.borderColor = 'var(--accent)';
-        }
-      });
-
-      cardEl.on('blur', () => {
-        const displayError = document.getElementById('card-errors');
-        if (!displayError.textContent) {
-          document.getElementById('stripe-card-element').style.borderColor = 'var(--g200)';
-        }
-      });
-    } catch (e) {
-      console.error('Error initializing Stripe elements:', e);
-      const displayError = document.getElementById('card-errors');
-      if (displayError) {
-        displayError.textContent = 'Stripe configuration error: Please make sure a valid STRIPE_PUBLISHABLE_KEY is configured.';
-        displayError.style.display = 'block';
-      }
-    }
-  } else {
-    console.warn('Stripe.js failed to load. Checkout functionality will not work until Stripe.js script is included and online.');
-  }
-}
-
-async function submitPayment() {
-  const btn = document.getElementById('paySubmitBtn');
-  const displayError = document.getElementById('card-errors');
-
-  // Clear previous errors
-  displayError.textContent = '';
-  displayError.style.display = 'none';
-
-  // Gather values
-  const fname = document.getElementById('pay-fname').value.trim();
-  const lname = document.getElementById('pay-lname').value.trim();
-  const email = document.getElementById('pay-email').value.trim();
-  const phone = document.getElementById('pay-phone').value.trim();
-  const cardname = document.getElementById('pay-cardname').value.trim();
-
-  // Reset borders
-  const fields = ['pay-fname', 'pay-lname', 'pay-email', 'pay-phone', 'pay-cardname'];
-  fields.forEach(id => {
-    document.getElementById(id).style.borderColor = 'var(--g200)';
-  });
-
-  // Validation
-  let hasError = false;
-  if (!fname) { document.getElementById('pay-fname').style.borderColor = '#ef4444'; hasError = true; }
-  if (!lname) { document.getElementById('pay-lname').style.borderColor = '#ef4444'; hasError = true; }
-  if (!email) { document.getElementById('pay-email').style.borderColor = '#ef4444'; hasError = true; }
-  if (!phone) { document.getElementById('pay-phone').style.borderColor = '#ef4444'; hasError = true; }
-  if (!cardname) { document.getElementById('pay-cardname').style.borderColor = '#ef4444'; hasError = true; }
-
-  if (hasError) {
-    displayError.textContent = 'Please fill out all required customer details.';
-    displayError.style.display = 'block';
-    return;
-  }
-
-  if (!stripe || !cardEl) {
-    displayError.textContent = 'Stripe is not fully initialized. Please ensure a valid STRIPE_PUBLISHABLE_KEY is set and Stripe.js has loaded.';
-    displayError.style.display = 'block';
-    return;
-  }
-
-  // Calculate amount due today
-  const info = TIER_INFO[S.tier];
-  let addTotal = 0;
-  Object.entries(S.addons).forEach(([k, v]) => {
-    if (v) addTotal += ADDON_PRICES[k];
-  });
-  const base = info.price + addTotal;
-  const amount = paySchedule === 'full' ? base : Math.ceil(base / 2);
-
-  // Disable submit button and fields to avoid multiple submissions
-  btn.textContent = 'Processing...';
-  btn.style.opacity = '0.7';
-  btn.disabled = true;
-  fields.forEach(id => { document.getElementById(id).disabled = true; });
-
-  try {
-    // 1. Request a PaymentIntent Client Secret from the backend API
-    const response = await fetch('/api/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        amount: amount,
-        description: `Web Insider - ${info.name} (${paySchedule === 'full' ? 'Paid in Full' : 'Split 50/50 Deposit'})`,
-        customerEmail: email,
-        customerName: `${fname} ${lname}`
-      })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok || data.error) {
-      throw new Error(data.error || 'Failed to create payment intent');
-    }
-
-    const clientSecret = data.clientSecret;
-
-    // 2. Confirm the card payment using Stripe.js
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: cardEl,
-        billing_details: {
-          name: cardname,
-          email: email,
-          phone: phone
-        }
-      }
-    });
-
-    if (result.error) {
-      // Show error to your customer (e.g., insufficient funds, incorrect PIN)
-      throw new Error(result.error.message);
-    } else {
-      // The payment has been processed!
-      if (result.paymentIntent.status === 'succeeded') {
-        // Show success screen
-        document.getElementById('payMain').style.display = 'none';
-        document.getElementById('paySuccess').classList.add('show');
-        document.getElementById('pg-payment').scrollTop = 0;
-      } else {
-        throw new Error('Payment was not completed successfully. Status: ' + result.paymentIntent.status);
-      }
-    }
-
-  } catch (error) {
-    // Show error, re-enable button and fields
-    displayError.textContent = error.message;
-    displayError.style.display = 'block';
-    
-    btn.textContent = 'Complete Purchase →';
-    btn.style.opacity = '';
-    btn.disabled = false;
-    fields.forEach(id => { document.getElementById(id).disabled = false; });
-  }
-}
-
-// ════════════════════ BOOKING ════════════════════
-function openBook(){document.getElementById('book-modal').classList.add('open');}
-function closeBook(){document.getElementById('book-modal').classList.remove('open');}
-function closeBookOutside(e){if(e.target===document.getElementById('book-modal')) closeBook();}
-function submitBook(){
-  const fname=document.getElementById('book-fname').value.trim();
-  const phone=document.getElementById('book-phone').value.trim();
-  if(!fname||!phone){
-    if(!fname) document.getElementById('book-fname').style.borderColor='#ef4444';
-    if(!phone) document.getElementById('book-phone').style.borderColor='#ef4444';
-    return;
-  }
-  document.getElementById('book-form-wrap').style.display='none';
-  document.getElementById('book-success').classList.add('show');
-}
-
-// ════════════════════ PRICING ════════════════════
-function openPricing(){document.getElementById('price-modal').classList.add('open');}
-function closePricing(){document.getElementById('price-modal').classList.remove('open');}
-function closePricingOutside(e){if(e.target===document.getElementById('price-modal')) closePricing();}
-
-// ════════════════════ FEATURE SIDE DRAWER PANEL ════════════════════
-const DRAWER_DATA = {
-  chat: {
-    icon: '🤖',
-    title: 'AI Chat Assistant',
-    subtitle: 'Answers customer questions instantly, 24/7',
-    valueProp: 'Your assistant never takes a day off. It instantly answers customer questions about your pricing, hours, services, and availability, freeing you up to run your business.',
-    bullets: [
-      'Responds instantly to 95% of common customer questions',
-      'Matches your custom brand voice and style perfectly',
-      'Keeps visitors engaged on your site longer, boosting SEO'
-    ],
-    demoHtml: `
-      <div style="display:flex; flex-direction:column; height: 260px; font-family: var(--fL);">
-        <div id="drawer-chat-box" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; font-size: 12px; padding: 4px; border: 1.5px solid var(--g200); border-radius:10px; background:white;">
-          <div style="background:var(--accent-soft); border-left:3px solid var(--accent); color:var(--black); align-self:flex-start; padding:8px 12px; border-radius:8px; max-width:80%; line-height:1.45;">Hi! I'm your business's AI assistant. Try clicking one of the common prompts below to see how I reply!</div>
-        </div>
-        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top: auto;">
-          <button class="chat-chip" onclick="triggerDrawerChatReply('What are your hours?')">What are your hours?</button>
-          <button class="chat-chip" onclick="triggerDrawerChatReply('Do you have parking?')">Do you have parking?</button>
-          <button class="chat-chip" onclick="triggerDrawerChatReply('How do I contact you?')">How do I contact you?</button>
-        </div>
-      </div>
-    `
-  },
-  lead: {
-    icon: '🎯',
-    title: 'AI Lead Qualifier',
-    subtitle: 'Captures and structures customer leads on autopilot',
-    valueProp: 'Standard contact forms are boring. Our AI Lead Qualifier actively engages visitors, asks them the right qualifying questions, and logs structured contact requests for you.',
-    bullets: [
-      'Asks clarifying questions based on what services the visitor needs',
-      'Gathers verified name, phone, and detailed request summaries',
-      'Saves client information directly, eliminating manual entry'
-    ],
-    demoHtml: `
-      <div style="font-family: var(--fL); font-size:13px;" id="drawer-lead-widget">
-        <p style="margin-bottom:12px; font-weight:600; color:var(--black); text-align:center;">Interactive Form Simulator</p>
-        <div id="lead-stage-1" style="background:white; border:1px solid var(--g200); border-radius:12px; padding:16px;">
-          <div style="margin-bottom:12px;">
-            <label style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--g400); display:block; margin-bottom:4px;">What services do you need?</label>
-            <select class="book-select" id="lead-svc-select" style="padding:10px; font-size:13px; font-family:var(--fB);">
-              <option>Custom Web Development</option>
-              <option>Branding & Design</option>
-              <option>Search Engine Optimization</option>
-            </select>
-          </div>
-          <button class="btn-prim" onclick="nextLeadStage(2)" style="padding:11px; font-size:13px; width:100%; font-family:var(--fD);">Next Step →</button>
-        </div>
-        <div id="lead-stage-2" style="display:none; background:white; border:1px solid var(--g200); border-radius:12px; padding:16px;">
-          <p style="background:var(--accent-soft); border-left:3px solid var(--accent); padding:10px; margin-bottom:12px; border-radius:6px; font-size:12px; line-height:1.4;"><strong>AI System:</strong> Great! Let's get your details to finalize your request.</p>
-          <div style="margin-bottom:12px; display:flex; flex-direction:column; gap:8px;">
-            <input class="book-input" id="lead-name" placeholder="Your Name" style="padding:10px; font-size:13px; font-family:var(--fB);">
-            <input class="book-input" id="lead-phone" placeholder="Phone Number" style="padding:10px; font-size:13px; font-family:var(--fB);">
-          </div>
-          <button class="btn-prim" onclick="submitLeadDemo()" style="padding:11px; font-size:13px; width:100%; font-family:var(--fD);">Submit Lead →</button>
-        </div>
-        <div id="lead-stage-success" style="display:none; text-align:center; padding:24px 16px; background:white; border:1.5px solid var(--accent); border-radius:12px;">
-          <span style="font-size:32px; display:block; margin-bottom:10px;">🎯</span>
-          <p style="font-weight:700; color:var(--black); margin-bottom:4px; font-family:var(--fD);">Lead Captured & Qualified!</p>
-          <p style="font-size:12px; color:var(--g600); line-height:1.45;">The AI structures and logs the request to your database instantly.</p>
-        </div>
-      </div>
-    `
-  },
-  seo: {
-    icon: '📍',
-    title: 'Hyper-Local SEO',
-    subtitle: 'Appear at the top of local neighborhood searches',
-    valueProp: 'Most local businesses lose traffic because search engines don\'t know their location context. We configure deep neighborhood tags to make your site dominant in search maps.',
-    bullets: [
-      'Optimizes your local maps listings and business details',
-      'Configures region-specific keyword tags for target areas',
-      'Propels your business to Google\'s Local Map Pack top tier'
-    ],
-    demoHtml: `
-      <div style="font-family: var(--fL); font-size: 13px;">
-        <p style="margin-bottom:12px; font-weight:600; color:var(--black); text-align:center;">Google Search Preview</p>
-        <div style="background:white; border: 1.5px solid var(--g200); border-radius:12px; padding:16px; box-shadow:0 4px 12px rgba(0,0,0,0.03);">
-          <div style="font-size:11px; color:#202124; margin-bottom:6px; display:flex; align-items:center; gap:6px;">
-            <span style="display:inline-block; width:14px; height:14px; border-radius:50%; background:#f1f3f4; text-align:center; line-height:14px; font-size:9px; font-weight:bold;">G</span>
-            <span>google.com/search?q=best+local+business+near+me</span>
-          </div>
-          <div style="margin-bottom:12px;">
-            <div style="color:#1a0dab; font-size:16px; font-family: Arial, sans-serif; font-weight:normal; margin-bottom:2px; text-decoration:underline;">Web Insider — NYC Custom Digital Services</div>
-            <div style="color:#006621; font-size:12px; margin-bottom:4px;">https://www.webinsider.co/bronx-services</div>
-            <div style="color:#545454; font-size:12px; line-height:1.4;">We build custom AI websites for businesses in the Bronx, Brooklyn, and surrounding NYC boroughs. Real people, premium designs, priority delivery.</div>
-          </div>
-          <div style="border-top:1px solid #f1f3f4; padding-top:10px; font-size:11px; color:var(--accent); font-weight:700; display:flex; align-items:center; gap:6px; font-family:var(--fB);">
-            <span class="lp-blink" style="width:8px; height:8px;"></span> #1 Ranking Hyper-Local SEO
-          </div>
-        </div>
-      </div>
-    `
-  },
-  popups: {
-    icon: '💡',
-    title: 'Smart Behavior Popups',
-    subtitle: 'Convert leaving visitors into loyal customers',
-    valueProp: 'Over 70% of website visitors leave and never return. Smart behavior tracking detects when a user is moving their mouse to exit and displays a compelling, custom call-to-action.',
-    bullets: [
-      'Triggers instantly on exit intent (desktop mouse movements)',
-      'Displays target vouchers, lead captures, or call requests',
-      'Provides a secondary chance to retain clients before they bounce'
-    ],
-    demoHtml: `
-      <div style="font-family: var(--fL); font-size:13px; text-align:center; padding:10px 0;">
-        <p style="margin-bottom:14px; font-weight:600; color:var(--black);">Interactive Popup Simulator</p>
-        <button class="btn-prim" onclick="triggerMockPopup()" style="padding:12px 24px; font-size:13px; font-family:var(--fD);">Simulate Exit Intent (Leave Site) →</button>
-        <div id="mock-popup-container" style="display:none; margin-top:20px; background:white; border: 1.5px solid var(--black); border-radius:14px; padding:20px; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.12); animation: successPop 0.4s cubic-bezier(.22,1,.56,1);">
-          <span style="font-size:28px; display:block; margin-bottom:8px;">🎁</span>
-          <h4 style="font-family:var(--fD); font-weight:700; font-size:16px; margin-bottom:4px; color:var(--black);">Wait! Get 10% Off Your Site</h4>
-          <p style="font-size:12px; color:var(--g600); margin-bottom:14px; line-height:1.5;">Don't go empty-handed. Claim a 10% discount on any Web Insider package by subscribing today.</p>
-          <input class="book-input" id="popup-email" placeholder="enter your email address" style="padding:10px; font-size:12px; margin-bottom:10px; text-align:center; font-family:var(--fB);">
-          <button class="btn-prim" onclick="closeMockPopup()" style="padding:10px 16px; font-size:12px; background:var(--accent); font-family:var(--fD); width:100%;">Claim My Offer →</button>
-        </div>
-      </div>
-    `
-  },
-  reviews: {
-    icon: '⭐',
-    title: 'Review Collection',
-    subtitle: 'Build online trust and reputability on autopilot',
-    valueProp: 'A higher rating on search platforms directly correlates with more calls. Our system captures happy client sentiments and prompts them to write reviews automatically.',
-    bullets: [
-      'Filters feedback: routes happy reviews directly to Google',
-      'Intercepts negative reviews, sending them to your private feedback inbox',
-      'Provides a consistent flow of fresh, positive local feedback'
-    ],
-    demoHtml: `
-      <div style="font-family: var(--fL); font-size: 13px;" id="drawer-review-widget">
-        <p style="margin-bottom:12px; font-weight:600; color:var(--black); text-align:center;">Interactive Review Collector</p>
-        <div style="background:white; border: 1px solid var(--g200); border-radius:12px; padding:16px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.03);">
-          <p style="font-weight:700; color:var(--black); margin-bottom:4px; font-family:var(--fD);">How was your service?</p>
-          <p style="font-size:11px; color:var(--g400); margin-bottom:12px;">Click a star rating to simulate customer feedback</p>
-          <div style="display:flex; justify-content:center; gap:8px; margin-bottom:14px;">
-            <span class="rev-star" onclick="rateStarDemo(1)" style="font-size:32px; cursor:pointer; color:var(--g200); transition: color 0.15s;">★</span>
-            <span class="rev-star" onclick="rateStarDemo(2)" style="font-size:32px; cursor:pointer; color:var(--g200); transition: color 0.15s;">★</span>
-            <span class="rev-star" onclick="rateStarDemo(3)" style="font-size:32px; cursor:pointer; color:var(--g200); transition: color 0.15s;">★</span>
-            <span class="rev-star" onclick="rateStarDemo(4)" style="font-size:32px; cursor:pointer; color:var(--g200); transition: color 0.15s;">★</span>
-            <span class="rev-star" onclick="rateStarDemo(5)" style="font-size:32px; cursor:pointer; color:var(--g200); transition: color 0.15s;">★</span>
-          </div>
-          <p id="star-rating-feedback" style="font-size:12px; font-weight:700; color:var(--accent); display:none; line-height:1.45;"></p>
-        </div>
-      </div>
-    `
-  },
-  booking: {
-    icon: '📅',
-    title: 'Online Booking',
-    subtitle: 'Streamline scheduling without the endless phone tag',
-    valueProp: 'Let your customers book your services when they are on your site — even at midnight. The calendar coordinates times, blocks out unavailable hours, and fills your booking list automatically.',
-    bullets: [
-      'Connects with Google Calendar, Outlook, and other integrations',
-      'Sends auto-reminders (SMS/Email) to prevent no-shows',
-      'Provides a frictionless scheduling flow for incoming clients'
-    ],
-    demoHtml: `
-      <div style="font-family: var(--fL); font-size: 13px;" id="drawer-booking-widget">
-        <p style="margin-bottom:12px; font-weight:600; color:var(--black); text-align:center;">Interactive Scheduling Simulator</p>
-        <div style="background:white; border: 1px solid var(--g200); border-radius:12px; padding:16px;">
-          <label style="font-size:10px; font-weight:700; text-transform:uppercase; color:var(--g400); display:block; margin-bottom:8px; text-align:center;">Select Appointment Day</label>
-          <div style="display:flex; gap:8px; margin-bottom:12px; justify-content:center;">
-            <button class="chat-chip" id="slot-day-1" onclick="selectSlotDay(1)" style="font-family:var(--fB);">Today</button>
-            <button class="chat-chip" id="slot-day-2" onclick="selectSlotDay(2)" style="font-family:var(--fB);">Tomorrow</button>
-            <button class="chat-chip" id="slot-day-3" onclick="selectSlotDay(3)" style="font-family:var(--fB);">Wednesday</button>
-          </div>
-          <div id="drawer-time-slots" style="display:none; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:12px;">
-            <button class="chat-chip" onclick="confirmSlotBooking('10:00 AM')" style="font-family:var(--fB);">10:00 AM</button>
-            <button class="chat-chip" onclick="confirmSlotBooking('1:30 PM')" style="font-family:var(--fB);">1:30 PM</button>
-            <button class="chat-chip" onclick="confirmSlotBooking('3:00 PM')" style="font-family:var(--fB);">3:00 PM</button>
-            <button class="chat-chip" onclick="confirmSlotBooking('4:30 PM')" style="font-family:var(--fB);">4:30 PM</button>
-          </div>
-          <div id="drawer-booking-success" style="display:none; text-align:center; padding:12px; background:var(--accent-soft); border-radius:8px; border:1px solid rgba(0,85,255,0.15);">
-            <span style="font-size:24px; display:block; margin-bottom:4px;">✅</span>
-            <p style="font-weight:700; color:var(--accent); font-size:12px; font-family:var(--fD);" id="booking-success-txt">Booking Confirmed!</p>
-          </div>
-        </div>
-      </div>
-    `
-  }
-};
-
-function openFeatureDemo(type) {
-  const data = DRAWER_DATA[type];
-  if (!data) return;
-
-  document.getElementById('dr-icon').textContent = data.icon;
-  document.getElementById('dr-title').textContent = data.title;
-  document.getElementById('dr-subtitle').textContent = data.subtitle;
-  document.getElementById('dr-value-prop').textContent = data.valueProp;
-  document.getElementById('dr-bullets').innerHTML = data.bullets.map(b => `<li style="margin-bottom:6px;">${b}</li>`).join('');
-  document.getElementById('dr-demo-content').innerHTML = data.demoHtml;
-
-  document.getElementById('feat-drawer-overlay').classList.add('open');
-  document.getElementById('feat-drawer').classList.add('open');
-}
-
-function closeFeatureDemo() {
-  document.getElementById('feat-drawer-overlay').classList.remove('open');
-  document.getElementById('feat-drawer').classList.remove('open');
-}
-
-// Interactive chat callbacks
-function triggerDrawerChatReply(msg) {
-  const box = document.getElementById('drawer-chat-box');
-  if (!box) return;
-
-  // Add User Message
-  box.innerHTML += `<div style="background:var(--g100); border:1px solid var(--g200); color:var(--black); align-self:flex-end; padding:8px 12px; border-radius:8px; border-bottom-right-radius:2px; max-width:80%; font-weight:500; line-height:1.4;">${msg}</div>`;
-  box.scrollTop = box.scrollHeight;
-
-  // Add Typing Indicator
-  const typingId = 'dr-typing-' + Date.now();
-  box.innerHTML += `
-    <div class="ptyping vis" id="${typingId}" style="align-self:flex-start; max-width:58px; padding:8px 12px; background:var(--g200); border-radius:10px; display:flex; gap:4px; align-items:center;">
-      <div class="td" style="background:#aab7c4; width:4px; height:4px;"></div>
-      <div class="td" style="background:#aab7c4; width:4px; height:4px;"></div>
-      <div class="td" style="background:#aab7c4; width:4px; height:4px;"></div>
-    </div>`;
-  box.scrollTop = box.scrollHeight;
-
-  // Generate replies
-  setTimeout(() => {
-    const typingEl = document.getElementById(typingId);
-    if (typingEl) typingEl.remove();
-
-    let reply = '';
-    if (msg.includes('hours')) {
-      reply = 'We are open Monday through Friday, 9:00 AM to 6:00 PM, and Saturdays from 10:00 AM to 4:00 PM. We are closed on Sundays.';
-    } else if (msg.includes('parking')) {
-      reply = 'Yes! We have a free client parking lot located right behind the main office entrance. Street parking is also available.';
-    } else {
-      reply = 'You can reach our team at support@webinsider.co, or call us directly at (718) 555-0100 during regular working hours!';
-    }
-
-    box.innerHTML += `<div style="background:var(--accent-soft); border-left:3px solid var(--accent); color:var(--black); align-self:flex-start; padding:8px 12px; border-radius:8px; max-width:80%; line-height:1.45;">${reply}</div>`;
-    box.scrollTop = box.scrollHeight;
-  }, 1200);
-}
-
-// Interactive Lead qualifier callbacks
-function nextLeadStage(stage) {
-  if (stage === 2) {
-    document.getElementById('lead-stage-1').style.display = 'none';
-    document.getElementById('lead-stage-2').style.display = 'block';
-  }
-}
-function submitLeadDemo() {
-  const name = document.getElementById('lead-name').value.trim();
-  const phone = document.getElementById('lead-phone').value.trim();
-  if (!name || !phone) {
-    if (!name) document.getElementById('lead-name').style.borderColor = '#ef4444';
-    if (!phone) document.getElementById('lead-phone').style.borderColor = '#ef4444';
-    return;
-  }
-  document.getElementById('lead-stage-2').style.display = 'none';
-  document.getElementById('lead-stage-success').style.display = 'block';
-}
-
-// Exit Intent simulation popup callbacks
-function triggerMockPopup() {
-  document.getElementById('mock-popup-container').style.display = 'block';
-}
-function closeMockPopup() {
-  const email = document.getElementById('popup-email')?.value.trim();
-  if (email) {
-    alert('Discount Code Sent to: ' + email);
-  }
-  document.getElementById('mock-popup-container').style.display = 'none';
-}
-
-// Stars rating callbacks
-function rateStarDemo(val) {
-  const stars = document.querySelectorAll('.rev-star');
-  stars.forEach((star, i) => {
-    if (i < val) {
-      star.style.color = '#eab308'; // active yellow star
-    } else {
-      star.style.color = 'var(--g200)';
-    }
-  });
-
-  const feedback = document.getElementById('star-rating-feedback');
-  feedback.style.display = 'block';
-  if (val >= 4) {
-    feedback.innerHTML = `⭐ Rated ${val}/5 Stars!<br><span style="color:var(--g600); font-weight:400; font-size:11px; display:block; margin-top:4px;">AI triggers redirect to Google Maps Review Page:</span><strong>"Thanks! Please share this on Google."</strong>`;
-  } else {
-    feedback.innerHTML = `⭐ Rated ${val}/5 Stars.<br><span style="color:var(--g600); font-weight:400; font-size:11px; display:block; margin-top:4px;">AI logs details privately:</span><strong>"Thanks! We will address this internally."</strong>`;
-  }
-}
-
-// Booking callbacks
-let selectedDayNum = null;
-function selectSlotDay(day) {
-  selectedDayNum = day;
-  document.querySelectorAll('#drawer-booking-widget .chat-chip').forEach(btn => {
-    if (btn.id.startsWith('slot-day-')) {
-      btn.style.borderColor = '';
-      btn.style.background = '';
-      btn.style.color = '';
-    }
-  });
-  const activeBtn = document.getElementById('slot-day-' + day);
-  if (activeBtn) {
-    activeBtn.style.borderColor = 'var(--accent)';
-    activeBtn.style.background = 'var(--accent-soft)';
-    activeBtn.style.color = 'var(--accent)';
-  }
-  document.getElementById('drawer-time-slots').style.display = 'grid';
-  document.getElementById('drawer-booking-success').style.display = 'none';
-}
-function confirmSlotBooking(time) {
-  const dayNames = ['Today', 'Tomorrow', 'Wednesday'];
-  const dayText = dayNames[(selectedDayNum || 1) - 1];
-  
-  document.getElementById('drawer-time-slots').style.display = 'none';
-  const successBox = document.getElementById('drawer-booking-success');
-  successBox.style.display = 'block';
-  document.getElementById('booking-success-txt').innerHTML = `Booking Confirmed!<br><span style="font-weight:400; color:var(--g600); font-size:11px;">Appointment scheduled for ${dayText} at ${time}.</span>`;
+function fakeSubmit(){
+  // In production, replace with Stripe payment processing
+  const btn=document.getElementById('paySubmitBtn');
+  btn.textContent='Processing...';btn.style.opacity='0.7';btn.disabled=true;
+  setTimeout(()=>{
+    document.getElementById('payMain').style.display='none';
+    document.getElementById('paySuccess').classList.add('show');
+    document.getElementById('pg-payment').scrollTop=0;
+  },2000);
 }
 
 // ════════════════════ BOOKING ════════════════════
@@ -2244,9 +1757,10 @@ window.addEventListener('DOMContentLoaded',()=>{
   resetPhoneChat();
   renderAddons();renderMonthly();
   updateNav('landing');
-  initStripe();
 });
 </script>
 </body>
+</html> 
+
 </html> 
 
