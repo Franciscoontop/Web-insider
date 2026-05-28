@@ -156,6 +156,7 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 .lp-btn-p:hover{transform:scale(1.05);box-shadow:0 16px 48px rgba(0,85,255,0.5);background:#0044dd}
 .lp-btn-g{font-family:var(--fD);font-weight:500;font-size:16px;color:rgba(255,255,255,0.6);background:none;border:1.5px solid rgba(255,255,255,0.15);padding:19px 32px;border-radius:100px;cursor:pointer;transition:all 0.22s;letter-spacing:-0.01em}
 .lp-btn-g:hover{border-color:rgba(255,255,255,0.5);color:var(--white)}
+.lp-scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;z-index:3;opacity:0;animation:lpFU 1s ease 2s forwards}
 .lp-scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;z-index:3;opacity:0;animation:lpScrollFU 1s ease 2s forwards}
 .lp-sline{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);animation:lpSA 2.5s ease-in-out infinite}
 @keyframes lpSA{0%,100%{transform:scaleY(0.7);opacity:0.2}50%{transform:scaleY(1.1);opacity:0.7}}
@@ -204,12 +205,11 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 .phone-name{font-family:var(--fD);font-weight:700;font-size:11px;color:var(--white)}
 .phone-status{font-size:9px;color:#22c55e;font-family:var(--fL);display:flex;align-items:center;gap:4px}
 .phone-status::before{content:'';width:5px;height:5px;border-radius:50%;background:#22c55e;display:inline-block}
-.phone-msgs{padding:12px 10px;display:flex;flex-direction:column;gap:7px;overflow:hidden;height:calc(100% - 100px)}
+.phone-msgs{padding:12px 10px;display:flex;flex-direction:column;gap:7px;overflow:hidden;height:calc(100% - 58px)}
 .pmsg{max-width:76%;padding:7px 11px;border-radius:14px;font-family:var(--fL);font-size:10px;line-height:1.45;opacity:0;transform:translateY(8px);transition:opacity 0.4s ease,transform 0.4s ease}
 .pmsg.u{background:var(--accent);color:var(--white);align-self:flex-end;border-bottom-right-radius:4px}
 .pmsg.a{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);align-self:flex-start;border-bottom-left-radius:4px}
 .pmsg.vis{opacity:1;transform:translateY(0)}
-.pmsg.sys{background:none;color:rgba(255,255,255,0.32);font-size:8px;text-align:center;align-self:center;padding:6px 0 2px;max-width:100%;font-style:italic;letter-spacing:0.01em}
 .ptyping{display:flex;gap:4px;align-items:center;padding:9px 12px;background:rgba(255,255,255,0.07);border-radius:14px;border-bottom-left-radius:4px;align-self:flex-start;max-width:58px;opacity:0;transition:opacity 0.3s}
 .ptyping.vis{opacity:1}
 .td{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.38);animation:tdB 1.2s ease-in-out infinite}
@@ -475,70 +475,11 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 #pg-compare{background:var(--g50);padding:88px 24px 80px;min-height:100%}
 .cw{max-width:820px;margin:52px auto 0;background:var(--white);border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.06),0 0 0 1px var(--g200);overflow-x:auto}
 .ct{width:100%;border-collapse:collapse;min-width:520px}
+.ct th{padding:20px 16px;text-align:center;font-family:var(--fD);font-weight:700;font-size:14px;border-bottom:1px solid var(--g200)}
 .ct th{padding:20px 16px;text-align:center;font-family:var(--fD);font-weight:700;font-size:14px;border-bottom:1px solid var(--g200);color:var(--black)}
 .ct th:first-child{text-align:left;background:var(--g100)}.ct th.wi{background:var(--black);color:white}
 .ct td{padding:13px 16px;font-family:var(--fL);font-size:13px;border-bottom:1px solid var(--g200);color:var(--g600);text-align:center}
 .ct td:first-child{text-align:left;font-weight:600;color:var(--black);background:var(--g50)}
-.ct td.wi{background:rgba(0,0,0,0.015);color:var(--black);font-weight:600;font-family:var(--fB)}
-.ct tr:last-child td{border-bottom:none}.ct tr:hover td{background:var(--g100)}.ct tr:hover td:first-child{background:var(--g100)}.ct tr:hover td.wi{background:rgba(0,0,0,0.03)}
-.cyes{color:#22c55e;font-size:16px}.cno{color:#ef4444;font-size:16px}.cwrn{color:#f59e0b;font-weight:600;font-size:12px}
-.final{max-width:580px;margin:72px auto 0;text-align:center;padding-bottom:40px}
-.final-title{font-family:var(--fD);font-weight:700;font-size:clamp(32px,5.5vw,60px);letter-spacing:-0.04em;line-height:1.05;color:var(--black);margin-bottom:14px}
-.final-quote{font-family:var(--fL);font-size:18px;color:var(--g600);font-weight:300;line-height:1.65;margin-bottom:36px;font-style:italic}
-.final-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.final-btns .btn-prim{background:var(--black);color:var(--white)}
-.final-btns .btn-prim:hover{background:var(--accent)}
-.btn-consult{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black);background:none;border:1.5px solid var(--g200);padding:19px 32px;border-radius:100px;cursor:pointer;transition:all 0.22s;letter-spacing:-0.01em;max-width:320px;text-align:center}
-.btn-consult:hover{border-color:var(--accent);color:var(--accent)}
-
-/* ═══════════════════════════════════
-   PAYMENT PAGE
-═══════════════════════════════════ */
-#pg-payment{background:var(--g50);padding:88px 24px 80px;min-height:100%}
-.pay-wrap{max-width:960px;margin:0 auto}
-.pay-header{text-align:center;margin-bottom:52px}
-.pay-back{font-family:var(--fB);font-size:14px;color:var(--g400);background:none;border:none;cursor:pointer;padding:8px 0;margin-bottom:24px;display:flex;align-items:center;gap:6px;transition:color 0.2s;justify-content:center;width:100%}
-.pay-back:hover{color:var(--black)}
-.pay-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start}
-@media(max-width:800px){.pay-grid{grid-template-columns:1fr}}
-.pay-form-wrap{background:var(--white);border-radius:22px;padding:36px;border:1px solid var(--g200)}
-.pay-form-title{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--black);margin-bottom:28px}
-.pay-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:480px){.pay-row{grid-template-columns:1fr}}
-.pay-field-wrap{margin-bottom:18px}
-.pay-label{font-family:var(--fB);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--g400);display:block;margin-bottom:8px}
-.pay-input{width:100%;font-family:var(--fB);font-size:15px;color:var(--black);background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;outline:none;transition:border-color 0.25s;appearance:none}
-.pay-input:focus{border-color:var(--accent)}
-.pay-input::placeholder{color:var(--g400)}
-/* ─── STRIPE INTEGRATION POINT ─── */
-/*
-  ┌────────────────────────────────────────────────────────────────────┐
-  │  STRIPE INTEGRATION                                               │
-  │                                                                    │
-  │  1. Add Stripe.js script to <head>:                               │
-  │     <script src="https://js.stripe.com/v3/"></script>             │
-  │                                                                    │
-  │  2. Initialize Stripe with your publishable key:                  │
-  │     const stripe = Stripe('pk_live_YOUR_KEY_HERE');               │
-  │     const elements = stripe.elements();                           │
-  │                                                                    │
-  │  3. Mount card element inside #stripe-card-element div below:     │
-  │     const card = elements.create('card', { style: stripeStyle }); │
-  │     card.mount('#stripe-card-element');                           │
-  │                                                                    │
-  │  4. On form submit, call stripe.createPaymentMethod() or          │
-  │     stripe.confirmCardPayment() with your PaymentIntent           │
-  │     secret from your backend.                                     │
-  │                                                                    │
-  │  5. Replace the fake card fields below with the mounted element.  │
-  └────────────────────────────────────────────────────────────────────┘
-*/
-.stripe-placeholder{background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;min-height:52px;display:flex;align-items:center;margin-bottom:18px;gap:12px;font-family:var(--fL);font-size:13px;color:var(--g400)}
-.stripe-placeholder::before{content:'🔒';font-size:16px}
-#stripe-card-element{background:var(--g50);border:1.5px solid var(--g200);border-radius:12px;padding:15px 16px;min-height:52px;margin-bottom:18px;transition:border-color 0.25s}
-.pay-billing-toggle{display:flex;background:var(--g100);border-radius:100px;padding:5px;gap:4px;margin-bottom:24px}
-.pay-tog-btn{flex:1;font-family:var(--fD);font-weight:700;font-size:14px;padding:11px;border-radius:100px;border:none;cursor:pointer;background:none;color:var(--g400);transition:all 0.3s;text-align:center}
-.pay-tog-btn.on{background:var(--white);color:var(--black);box-shadow:0 2px 10px rgba(0,0,0,0.08)}
 .pay-notice{font-family:var(--fL);font-size:12px;color:var(--g400);text-align:center;margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:6px}
 .pay-submit{width:100%;font-family:var(--fD);font-weight:700;font-size:17px;color:var(--white);background:var(--black);border:none;padding:18px;border-radius:14px;cursor:pointer;transition:all 0.28s cubic-bezier(.34,1.56,.64,1);letter-spacing:-0.01em;margin-top:8px}
 .pay-submit:hover{background:var(--accent);transform:scale(1.02);box-shadow:0 10px 32px var(--accent-glow)}
@@ -669,152 +610,6 @@ nav.light-nav .nav-link.active-nl{color:var(--black)!important}
 /* Order Summary */
 .pay-summary{background:var(--white);border-radius:22px;padding:32px;border:1px solid var(--g200);position:sticky;top:82px}
 .pay-sum-title{font-family:var(--fD);font-weight:700;font-size:18px;letter-spacing:-0.03em;color:var(--black);margin-bottom:24px}
-.pay-plan-badge{display:flex;align-items:center;gap:12px;background:var(--g50);border-radius:14px;padding:16px;margin-bottom:20px;border:1px solid var(--g200)}
-.pay-plan-icon{width:44px;height:44px;border-radius:12px;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.pay-plan-name{font-family:var(--fD);font-weight:700;font-size:17px;color:var(--black)}
-.pay-plan-desc{font-family:var(--fL);font-size:12px;color:var(--g400);margin-top:2px}
-.pay-line{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--g200);font-family:var(--fL);font-size:13px}
-.pay-line:last-of-type{border-bottom:none}
-.pay-line-nm{color:var(--black);font-weight:500}
-.pay-line-val{color:var(--g600);font-family:var(--fD);font-weight:600;font-size:13px}
-.pay-total-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;margin-top:4px;border-top:2px solid var(--black)}
-.pay-total-lbl{font-family:var(--fD);font-weight:700;font-size:16px;color:var(--black)}
-.pay-total-val{font-family:var(--fD);font-weight:700;font-size:24px;letter-spacing:-0.03em;color:var(--accent)}
-.pay-guarantee{display:flex;align-items:center;gap:10px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:12px;padding:14px;margin-top:20px}
-.pay-guarantee-icon{font-size:22px;flex-shrink:0}
-.pay-guarantee-txt{font-family:var(--fL);font-size:12px;color:var(--g600);line-height:1.5}
-.pay-success{display:none;text-align:center;padding:60px 24px;max-width:520px;margin:0 auto}
-.pay-success.show{display:block}
-.pay-success-icon{font-size:64px;display:block;margin-bottom:24px;animation:successPop 0.6s cubic-bezier(.22,1,.56,1) forwards}
-@keyframes successPop{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
-.pay-success-title{font-family:var(--fD);font-weight:700;font-size:32px;letter-spacing:-0.04em;color:var(--black);margin-bottom:12px}
-.pay-success-sub{font-family:var(--fL);font-size:16px;color:var(--g600);line-height:1.7;margin-bottom:32px}
-
-footer{background:var(--near-black);color:rgba(255,255,255,0.5);text-align:center;padding:28px 24px;font-family:var(--fL);font-size:12px}
-footer strong{color:white;font-family:var(--fD);font-weight:700}
-</style>
-</head>
-<body>
-
-<!-- ─── NAV ─── -->
-<nav id="mainNav">
-  <span class="nav-logo" onclick="navHome()">Web<b>Insider</b></span>
-  <div class="nav-links">
-    <button class="nav-link active-nl" id="navHomeBtn" onclick="navHome()">Home</button>
-    <button class="nav-link" onclick="openPricing()">Pricing</button>
-    <button class="nav-link" style="color:var(--g400);cursor:not-allowed" title="Coming soon">Support</button>
-  </div>
-  <div class="nav-right">
-    <div class="nav-price" id="navPrice">$499</div>
-    <button class="nav-cta" id="buildBtn" onclick="navBuildSite()">Build My Site →</button>
-  </div>
-</nav>
-
-<!-- ─── PROGRESS ─── -->
-<div id="pbar"><div id="pfill"></div></div>
-<div id="scroll-prog"></div>
-
-<!-- ═══════════ WARNING MODAL ═══════════ -->
-<div id="warn-modal">
-  <div class="warn-box">
-    <span class="warn-icon">⚠️</span>
-    <div class="warn-title">Hold on — you'll lose your progress</div>
-    <div class="warn-sub">Leaving now will erase your survey answers and site preview. You'll have to start from scratch.</div>
-    <div class="warn-btns">
-      <button class="warn-stay" onclick="closeWarn()">Stay & Continue Building</button>
-      <button class="warn-leave" id="warnLeaveBtn" onclick="confirmLeave()">Leave Anyway</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ BOOKING MODAL ═══════════ -->
-<div id="book-modal" onclick="closeBookOutside(event)">
-  <div class="book-sheet">
-    <button class="book-close" onclick="closeBook()">✕</button>
-    <div class="book-handle"></div>
-    <div id="book-form-wrap">
-      <h2 class="book-title">Book a free call.</h2>
-      <p class="book-sub">We'll talk through your goals, your business, and what the right site looks like for you — no pressure, no pitch.</p>
-      <div class="book-form">
-        <div>
-          <label class="book-label">First Name</label>
-          <input class="book-input" type="text" placeholder="Mike" id="book-fname">
-        </div>
-        <div>
-          <label class="book-label">Last Name</label>
-          <input class="book-input" type="text" placeholder="Johnson" id="book-lname">
-        </div>
-        <div class="full">
-          <label class="book-label">Phone Number</label>
-          <input class="book-input" type="tel" placeholder="(718) 555-0100" id="book-phone">
-        </div>
-        <div class="full">
-          <label class="book-label">Business Name</label>
-          <input class="book-input" type="text" placeholder="Your business" id="book-biz">
-        </div>
-        <div class="full">
-          <label class="book-label">Best Time to Reach You</label>
-          <select class="book-select" id="book-time">
-            <option value="">Select a time window...</option>
-            <option>Morning (9am – 12pm)</option>
-            <option>Afternoon (12pm – 4pm)</option>
-            <option>Evening (4pm – 7pm)</option>
-            <option>Anytime works</option>
-          </select>
-        </div>
-        <div class="full">
-          <label class="book-label">Anything else? (optional)</label>
-          <textarea class="book-textarea" placeholder="Tell us a bit about your business or what you're looking for..." id="book-msg"></textarea>
-        </div>
-        <div class="full">
-          <button class="book-submit" onclick="submitBook()">Request My Free Call →</button>
-        </div>
-      </div>
-    </div>
-    <div class="book-success" id="book-success">
-      <span class="book-success-icon">✅</span>
-      <div class="book-success-title">You're on the list.</div>
-      <div class="book-success-sub">We'll reach out within 24 hours to confirm your call time. Talk soon.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════ PRICING MODAL ═══════════ -->
-<div id="price-modal" onclick="closePricingOutside(event)">
-  <div class="pm-sheet">
-    <button class="pm-close" onclick="closePricing()">✕</button>
-    <div class="pm-handle"></div>
-    <h2 class="pm-title">Simple, honest pricing.</h2>
-    <p class="pm-sub">Every plan includes a custom AI assistant. No templates, no limits on support.</p>
-    <div class="pm-cards">
-      <div class="pm-card">
-        <div class="pm-cnm">Starter</div><div class="pm-cpr">$499</div>
-        <div class="pm-cf">1–3 pages · Mobile responsive · AI Chat · Contact form + Maps · Basic SEO · Delivered in 7 days</div>
-      </div>
-      <div class="pm-card pop">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px">Most Popular</div>
-        <div class="pm-cnm" style="color:white">Pro</div><div class="pm-cpr">$899</div>
-        <div class="pm-cf">Up to 6 pages · Custom premium design · Photo gallery · Full SEO · AI Chat · Delivered in 10 days</div>
-      </div>
-      <div class="pm-card">
-        <div class="pm-cnm">Premium</div><div class="pm-cpr">$1,499</div>
-        <div class="pm-cf">Unlimited pages · All 6 AI features · Custom logo · Online booking · Unlimited revisions · Priority 7-day delivery</div>
-      </div>
-    </div>
-    <h3 class="pm-addons-title">AI Marketing Add-ons</h3>
-    <div class="pm-addon-row"><span class="pm-addon-nm">🤖 AI Chat Assistant</span><span class="pm-addon-pr">Included in all plans</span></div>
-    <div class="pm-addon-row"><span class="pm-addon-nm">🎯 AI Lead Qualifier</span><span class="pm-addon-pr">+$79 one-time</span></div>
-    <div class="pm-addon-row"><span class="pm-addon-nm">💡 Smart Behavior Popups</span><span class="pm-addon-pr">+$99 one-time</span></div>
-    <div class="pm-addon-row"><span class="pm-addon-nm">📍 Hyper-Local SEO Content</span><span class="pm-addon-pr">+$149 one-time</span></div>
-    <div class="pm-addon-row"><span class="pm-addon-nm">⭐ Review Collection System</span><span class="pm-addon-pr">+$79 one-time</span></div>
-    <div class="pm-addon-row"><span class="pm-addon-nm">📦 Full AI Marketing Bundle</span><span class="pm-addon-pr">$399 (save $78)</span></div>
-    <h3 class="pm-monthly-title">Monthly AI Upkeep</h3>
-    <div class="pm-addon-row"><span class="pm-addon-nm">🔄 Basic — AI updates</span><span class="pm-addon-pr">$29/mo</span></div>
-    <div class="pm-addon-row"><span class="pm-addon-nm">🔄 Pro — Updates + lead reports + review drafts</span><span class="pm-addon-pr">$49/mo</span></div>
-    <div class="pm-addon-row"><span class="pm-addon-nm">🔄 Premium — Priority support + quarterly refresh</span><span class="pm-addon-pr">$99/mo</span></div>
-    <div style="margin-top:28px;text-align:center">
-      <button class="btn-prim" onclick="closePricing();navBuildSite()">Build My Site Preview →</button>
-    </div>
   </div>
 </div>
 
@@ -864,6 +659,13 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
     <div class="lp-scroll-hint"><div class="lp-sline"></div><span class="lp-slbl">Scroll</span></div>
   </section>
 
+  <!-- Counter Strip -->
+  <div class="lp-strip">
+    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="47" data-suffix="+">0+</div><div class="lp-cnt-lbl">Sites Built</div></div>
+    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="6" data-suffix="">0</div><div class="lp-cnt-lbl">Industries</div></div>
+    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="7" data-suffix=" Days">0 Days</div><div class="lp-cnt-lbl">Avg Delivery</div></div>
+    <div class="lp-cnt-item"><div class="lp-cnt-num" data-target="100" data-suffix="%">0%</div><div class="lp-cnt-lbl">Bronx-Based</div></div>
+  </div>
 
 
   <!-- Phone Section -->
@@ -879,9 +681,25 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
             <div class="phone-av">🤖</div>
             <div><div class="phone-name">AI Assistant</div><div class="phone-status">Online now</div></div>
           </div>
-          <div class="phone-msgs" id="phoneMsgs" style="height: calc(100% - 100px); overflow-y: auto;"></div>
+          <div class="phone-msgs" id="phoneMsgs">
+          <div class="phone-msgs" id="phoneMsgs" style="height: calc(100% - 110px); overflow-y: auto;">
+            <div class="pmsg u" id="pm1">Hey, are you open on weekends?</div>
+            <div class="ptyping" id="pt1"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+            <div class="pmsg a" id="pm2">Yes! We're open Sat–Sun 9am–5pm. Want to book a spot?</div>
+            <div class="pmsg u" id="pm3">How much does it cost?</div>
+            <div class="ptyping" id="pt2"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+            <div class="pmsg a" id="pm4">Starts at $35 depending on what you need. I can get you an exact quote — what are you looking for?</div>
+            <div class="pmsg u" id="pm5">Do you offer payment plans?</div>
+            <div class="ptyping" id="pt3"><div class="td"></div><div class="td"></div><div class="td"></div></div>
+            <div class="pmsg a" id="pm6">We do! Most clients split into 2–3 payments. Want me to have someone reach out today? 😊</div>
+          </div>
           <!-- Interactive Suggestion Chips -->
-          <div class="phone-chips-area" id="phoneChips"></div>
+          <div class="phone-chips" id="phoneChips" style="display: flex; gap: 4px; padding: 6px 8px; background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.05); overflow-x: auto; white-space: nowrap; scrollbar-width: none; height: 52px; align-items: center;">
+            <button class="pchip" onclick="triggerInteractiveLandingChat('Are you open weekends?', 'Yes! We\'re open Sat–Sun 9am–5pm. Want to book a spot?')">Open weekends?</button>
+            <button class="pchip" onclick="triggerInteractiveLandingChat('Do you offer payment plans?', 'Yes! We offer 50/50 split payment plans on all custom packages. 😊')">Payment plans?</button>
+            <button class="pchip" onclick="triggerInteractiveLandingChat('What is average delivery?', 'Avg delivery is 1-2 weeks for Starter and 2-3 weeks for Pro/Premium plans.')">Delivery time?</button>
+            <button class="pchip" onclick="triggerInteractiveLandingChat('Can I custom design?', 'Absolutely! Our Pro and Premium packages include fully customized premium designs.')">Custom designs?</button>
+          </div>
         </div>
       </div>
     </div>
@@ -896,6 +714,12 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
         <p class="lp-sec-sub sr h" style="display:block;margin:0 auto;transition-delay:0.16s">Not templates. Not DIY. Real features built by real people.</p>
       </div>
       <div class="lp-feat-grid">
+        <div class="lp-fc sr h" style="transition-delay:0.05s"><span class="lp-fc-icon">🤖</span><div class="lp-fc-title">AI Chat Assistant</div><div class="lp-fc-desc">Answers customer questions instantly, 24/7. Never lose a lead because you were busy or asleep.</div><span class="lp-fc-tag">Included Free</span></div>
+        <div class="lp-fc sr h" style="transition-delay:0.12s"><span class="lp-fc-icon">🎯</span><div class="lp-fc-title">AI Lead Qualifier</div><div class="lp-fc-desc">Captures name, number, and what they need — before they even call you.</div><span class="lp-fc-tag">Add-on</span></div>
+        <div class="lp-fc sr h" style="transition-delay:0.19s"><span class="lp-fc-icon">📍</span><div class="lp-fc-title">Hyper-Local SEO</div><div class="lp-fc-desc">Show up when people in your neighborhood search. Built for the Bronx, Brooklyn, wherever you are.</div><span class="lp-fc-tag">Add-on</span></div>
+        <div class="lp-fc sr h" style="transition-delay:0.26s"><span class="lp-fc-icon">💡</span><div class="lp-fc-title">Smart Behavior Popups</div><div class="lp-fc-desc">Fires a perfectly-timed offer when a visitor is about to leave. Turns bounces into bookings.</div><span class="lp-fc-tag">Add-on</span></div>
+        <div class="lp-fc sr h" style="transition-delay:0.33s"><span class="lp-fc-icon">⭐</span><div class="lp-fc-title">Review Collection</div><div class="lp-fc-desc">Automatically asks happy customers for Google reviews after their visit. Builds reputation on autopilot.</div><span class="lp-fc-tag">Add-on</span></div>
+        <div class="lp-fc sr h" style="transition-delay:0.4s"><span class="lp-fc-icon">📅</span><div class="lp-fc-title">Online Booking</div><div class="lp-fc-desc">Customers book directly from your site. No phone tag, no back-and-forth. Calendar fills itself.</div><span class="lp-fc-tag">Premium</span></div>
         <div class="lp-fc sr h" style="transition-delay:0.05s" onclick="openFeatureDemo('chat')"><span class="lp-fc-icon">🤖</span><div class="lp-fc-title">AI Chat Assistant</div><div class="lp-fc-desc">Answers customer questions instantly, 24/7. Never lose a lead because you were busy or asleep.</div><span class="lp-fc-tag">Included Free</span></div>
         <div class="lp-fc sr h" style="transition-delay:0.12s" onclick="openFeatureDemo('lead')"><span class="lp-fc-icon">🎯</span><div class="lp-fc-title">AI Lead Qualifier</div><div class="lp-fc-desc">Captures name, number, and what they need — before they even call you.</div><span class="lp-fc-tag">Add-on</span></div>
         <div class="lp-fc sr h" style="transition-delay:0.19s" onclick="openFeatureDemo('seo')"><span class="lp-fc-icon">📍</span><div class="lp-fc-title">Hyper-Local SEO</div><div class="lp-fc-desc">Show up when people in your neighborhood search. Built for the Bronx, Brooklyn, wherever you are.</div><span class="lp-fc-tag">Add-on</span></div>
@@ -909,12 +733,22 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
   <!-- Reel Section -->
   <section class="lp-reel-sec">
     <div class="reel-track" id="reelTrack">
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0800,#3d1800)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Barbershop</div><div class="reel-title">Fresh Cuts<br>Every Time</div><div class="reel-sub">Book online · AI chat live</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#000d1a,#001840)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Restaurant</div><div class="reel-title">Reserve Your<br>Table Tonight</div><div class="reel-sub">Menu live · Order direct</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#081a08,#0c2e16)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Home Services</div><div class="reel-title">We Fix It.<br>Fast.</div><div class="reel-sub">Free estimates · 24/7</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0018,#360036)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Health & Wellness</div><div class="reel-title">Feel Better.<br>Start Today.</div><div class="reel-sub">Book sessions · Memberships</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1000,#3a2600)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Retail</div><div class="reel-title">Shop Local.<br>Ship Fast.</div><div class="reel-sub">Online store · Curbside</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1a1a,#2a2a2a)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#0055ff">Vibe Theme</div><div class="reel-title">Sleek. Modern.<br>No Clutter.</div><div class="reel-sub">Clean & Minimal · AI Live Chat</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#120024,#2a004f)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#a855f7">Vibe Theme</div><div class="reel-title">Loud. Proud.<br>Unforgettable.</div><div class="reel-sub">Bold & Energetic · Custom Grid</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#3d1c10,#5c2d1e)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#d97706">Vibe Theme</div><div class="reel-title">Friendly. Local.<br>Trusted.</div><div class="reel-sub">Warm & Welcoming · Serif Vibe</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#0f0f0f,#1e1b10)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#d4af37">Vibe Theme</div><div class="reel-title">Elegant. Refined.<br>High-End.</div><div class="reel-sub">Luxury & Premium · Serif Accents</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#020b18,#051a36)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#00d4ff">Vibe Theme</div><div class="reel-title">Digital. Sleek.<br>Advanced.</div><div class="reel-sub">Tech-forward & Modern · Glow Grid</div></div></div>
       <!-- Duplicated for seamless loop -->
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0800,#3d1800)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Barbershop</div><div class="reel-title">Fresh Cuts<br>Every Time</div><div class="reel-sub">Book online · AI chat live</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#000d1a,#001840)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Restaurant</div><div class="reel-title">Reserve Your<br>Table Tonight</div><div class="reel-sub">Menu live · Order direct</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#081a08,#0c2e16)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Home Services</div><div class="reel-title">We Fix It.<br>Fast.</div><div class="reel-sub">Free estimates · 24/7</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a0018,#360036)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Health & Wellness</div><div class="reel-title">Feel Better.<br>Start Today.</div><div class="reel-sub">Book sessions · Memberships</div></div></div>
+      <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1000,#3a2600)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type">Retail</div><div class="reel-title">Shop Local.<br>Ship Fast.</div><div class="reel-sub">Online store · Curbside</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#1a1a1a,#2a2a2a)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#0055ff">Vibe Theme</div><div class="reel-title">Sleek. Modern.<br>No Clutter.</div><div class="reel-sub">Clean & Minimal · AI Live Chat</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#120024,#2a004f)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#a855f7">Vibe Theme</div><div class="reel-title">Loud. Proud.<br>Unforgettable.</div><div class="reel-sub">Bold & Energetic · Custom Grid</div></div></div>
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#3d1c10,#5c2d1e)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#d97706">Vibe Theme</div><div class="reel-title">Friendly. Local.<br>Trusted.</div><div class="reel-sub">Warm & Welcoming · Serif Vibe</div></div></div>
@@ -922,6 +756,7 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
       <div class="reel-card"><div class="reel-bg" style="position:absolute;inset:0;background:linear-gradient(145deg,#020b18,#051a36)"></div><div class="reel-ov"></div><div class="reel-ct"><div class="reel-type" style="color:#00d4ff">Vibe Theme</div><div class="reel-title">Digital. Sleek.<br>Advanced.</div><div class="reel-sub">Tech-forward & Modern · Glow Grid</div></div></div>
     </div>
     <div class="reel-edge-l"></div><div class="reel-edge-r"></div>
+    <div class="reel-ot"><h2>Every industry.<br><span>One platform.</span></h2></div>
     <div class="reel-ot"><h2>Five custom themes.<br><span>Choose your vibe.</span></h2></div>
   </section>
 
@@ -995,6 +830,7 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
         <button class="tp" id="tp-pro" onclick="setTier('pro',this)">Pro</button>
         <button class="tp" id="tp-premium" onclick="setTier('premium',this)">Premium</button>
       </div>
+      <div class="tier-desc" id="tierDesc">1–3 pages · Mobile ready · AI Chat included · Delivered in 7 days</div>
       <div class="tier-desc" id="tierDesc">1–3 pages · Mobile ready · AI Chat included · Delivered in 1-2 weeks</div>
       <div class="sublbl">What's included</div>
       <div class="feat-list" id="coreList"></div>
@@ -1052,35 +888,24 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
       <div class="t-feat"><span class="ty">✓</span><span class="ft">AI Chat Assistant 24/7</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Contact form + Google Maps</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Basic SEO setup</span></div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">Delivered in 1–2 weeks</span></div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">Delivered in 7 days</span></div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">Delivered in 1-2 weeks</span></div>
       <div class="t-feat"><span class="tn">✗</span><span class="ft dim">Custom premium design</span></div>
       <div class="t-feat"><span class="tn">✗</span><span class="ft dim">Photo gallery</span></div>
       <div class="t-feat"><span class="tn">✗</span><span class="ft dim">AI Lead Qualifier</span></div>
-      <button class="t-cta" onclick="pickTier('starter')">Choose Starter</button>
-    </div>
-    <div class="tc hot" id="tc-pro">
-      <div class="t-badge">Most Popular</div>
-      <div class="t-nm">Pro</div><div class="t-pr">$899</div>
-      <div class="t-feat"><span class="tw">✓</span><span class="ft">Up to 6 pages, premium design</span></div>
-      <div class="t-feat"><span class="tw">✓</span><span class="ft">AI Chat Assistant 24/7</span></div>
       <div class="t-feat"><span class="tw">✓</span><span class="ft">Photo gallery + About page</span></div>
       <div class="t-feat"><span class="tw">✓</span><span class="ft">Full SEO + Google Reviews</span></div>
       <div class="t-feat"><span class="tw">✓</span><span class="ft">Custom logo + branding</span></div>
-      <div class="t-feat"><span class="tw">✓</span><span class="ft">Delivered in 1–2 weeks</span></div>
+      <div class="t-feat"><span class="tw">✓</span><span class="ft">Delivered in 10 days</span></div>
+      <div class="t-feat"><span class="tw">✓</span><span class="ft">Delivered in 2-3 weeks</span></div>
       <div class="t-feat"><span class="tn" style="color:rgba(255,255,255,0.2)">✗</span><span class="ft dim">Online booking integration</span></div>
       <div class="t-feat"><span class="tn" style="color:rgba(255,255,255,0.2)">✗</span><span class="ft dim">Blog section</span></div>
       <button class="t-cta" onclick="pickTier('pro')">Choose Pro</button>
-    </div>
-    <div class="tc" id="tc-premium">
-      <div class="t-nm">Premium</div><div class="t-pr">$1,499</div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">Unlimited pages</span></div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">All 6 AI features</span></div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">Custom logo + branding</span></div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">Online booking integration</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Blog section included</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Unlimited revisions</span></div>
       <div class="t-feat"><span class="ty">✓</span><span class="ft">Quarterly site refresh</span></div>
-      <div class="t-feat"><span class="ty">✓</span><span class="ft">Priority 2–7 day delivery</span></div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">Priority 7-day delivery</span></div>
+      <div class="t-feat"><span class="ty">✓</span><span class="ft">Priority 2-3 week delivery</span></div>
       <button class="t-cta" onclick="pickTier('premium')">Choose Premium</button>
     </div>
   </div>
@@ -1105,7 +930,7 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
         <tr><td>AI Lead Capture</td><td class="wi"><span class="cyes">✓</span> Add-on</td><td><span class="cno">✗</span></td><td><span class="cno">✗</span></td></tr>
         <tr><td>Local SEO</td><td class="wi"><span class="cyes">✓</span> Built in</td><td><span class="cwrn">Varies</span></td><td><span class="cwrn">Basic only</span></td></tr>
         <tr><td>Starting Price</td><td class="wi">$499 one-time</td><td>$1,500–$5,000+</td><td>$16–$49/month forever</td></tr>
-        <tr><td>Delivery Time</td><td class="wi">1–2 weeks</td><td>4–8 weeks</td><td>DIY — you build it</td></tr>
+        <tr><td>Delivery Time</td><td class="wi">7–10 days</td><td>4–8 weeks</td><td>DIY — you build it</td></tr>
         <tr><td>Ongoing Support</td><td class="wi"><span class="cyes">✓</span> $29–$99/mo</td><td>Extra per hour</td><td>Forum only</td></tr>
         <tr><td>Real Person to Call</td><td class="wi"><span class="cyes">✓</span> Always</td><td><span class="cwrn">Sometimes</span></td><td><span class="cno">✗</span></td></tr>
         <tr><td>Built in the Bronx</td><td class="wi"><span class="cyes">✓</span></td><td><span class="cwrn">Depends</span></td><td><span class="cno">✗</span> Faceless company</td></tr>
@@ -1208,6 +1033,7 @@ footer strong{color:white;font-family:var(--fD);font-weight:700}
             <div class="pay-plan-icon" id="payPlanIcon">🚀</div>
             <div>
               <div class="pay-plan-name" id="payPlanName">Starter Plan</div>
+              <div class="pay-plan-desc" id="payPlanDesc">1–3 pages · AI Chat · 7 days</div>
               <div class="pay-plan-desc" id="payPlanDesc">1–3 pages · AI Chat · 1-2 weeks</div>
             </div>
           </div>
@@ -1246,9 +1072,12 @@ const TIER_PRICES={starter:499,pro:899,premium:1499};
 const ADDON_PRICES={lead:79,popups:99,seo:149,reviews:79};
 const MONTHLY_PRICES={none:0,basic:29,menpro:49,premium:99};
 const TIER_DESCS={
-  starter:'1–3 pages · Mobile ready · AI Chat included · Delivered in 1–2 weeks',
-  pro:'Up to 6 pages · Premium design · Photo gallery · Full SEO · Delivered in 1–2 weeks',
-  premium:'Unlimited pages · All 6 AI features · Custom logo · Booking · Priority 2–7 day delivery'
+  starter:'1–3 pages · Mobile ready · AI Chat included · Delivered in 7 days',
+  pro:'Up to 6 pages · Premium design · Photo gallery · Full SEO · Delivered in 10 days',
+  premium:'Unlimited pages · All 6 AI features · Custom logo · Booking · Priority 7-day delivery'
+  starter:'1–3 pages · Mobile ready · AI Chat included · Delivered in 1-2 weeks',
+  pro:'Up to 6 pages · Premium design · Photo gallery · Full SEO · Delivered in 2-3 weeks',
+  premium:'Unlimited pages · All 6 AI features · Custom logo · Booking · Priority 2-3 week delivery'
 };
 const TIER_TABS={
   starter:['home','services','contact'],
@@ -1483,151 +1312,69 @@ function initScrollProgress(){
 let chatStarted=false,chatObserver=null;
 let chatTimers = [];
 let chatInterrupted = false;
-let chatRound = 0;
-
-// Conversation tree: 3 rounds of choices, each with follow-up options
-const CHAT_TREE = [
-  // Round 1: Opening questions
-  {
-    chips: [
-      { label: 'Are you open weekends?', reply: 'Yes! We're open Sat–Sun 9am–5pm. Want to book a spot?' },
-      { label: 'What do you offer?', reply: 'We build custom websites for local businesses — design, AI chat, SEO, the whole thing. 💪' },
-      { label: 'How much does it cost?', reply: 'Starts at $499 for a full custom site. Want me to break down what's included?' }
-    ]
-  },
-  // Round 2: Follow-ups
-  {
-    chips: [
-      { label: 'Do you have payment plans?', reply: 'Yes! You can split any package 50/50 — half now, half on delivery. No interest.' },
-      { label: 'How long does it take?', reply: 'Most sites are delivered in 1–2 weeks. Premium clients get priority 2–7 day turnaround.' },
-      { label: 'Can I see examples?', reply: 'Of course! We have 5 custom design vibes you can preview — scroll down to check them out.' }
-    ]
-  },
-  // Round 3: Closing questions
-  {
-    chips: [
-      { label: 'What makes you different?', reply: 'Every site gets a built-in AI assistant, lead capture, and real ongoing support — not a template you build yourself.' },
-      { label: 'Can I book a call?', reply: 'Absolutely! Hit the "Book a Free Call" button and we\'ll walk through everything together. No pressure. 🤝' },
-      { label: 'I\'m interested!', reply: 'Amazing! Click "Build My Site" at the top to get started — you\'ll see a preview of your site in seconds. 🚀' }
-    ]
-  }
-];
-
-function initPhoneChatInteractive() {
-  chatRound = 0;
-  chatInterrupted = false;
-  const box = document.getElementById('phoneMsgs');
-  const chipArea = document.getElementById('phoneChips');
-  if (!box || !chipArea) return;
-  box.innerHTML = '';
-  chipArea.classList.remove('done');
-  // AI greeting
-  addPhoneMsg(box, 'a', 'Hey there! 👋 I\'m your AI assistant. How can I help you today?', true);
-  // Show round 1 chips
-  setTimeout(() => renderPhoneChips(), 600);
-}
-
-function addPhoneMsg(box, type, text, instant) {
-  const div = document.createElement('div');
-  div.className = 'pmsg ' + type + (instant ? ' vis' : '');
-  div.textContent = text;
-  box.appendChild(div);
-  if (!instant) requestAnimationFrame(() => requestAnimationFrame(() => div.classList.add('vis')));
-  box.scrollTop = box.scrollHeight;
-  return div;
-}
-
-function addPhoneTyping(box) {
-  const wrap = document.createElement('div');
-  wrap.className = 'ptyping vis';
-  wrap.innerHTML = '<div class="td"></div><div class="td"></div><div class="td"></div>';
-  box.appendChild(wrap);
-  box.scrollTop = box.scrollHeight;
-  return wrap;
-}
-
-function renderPhoneChips() {
-  const chipArea = document.getElementById('phoneChips');
-  if (!chipArea) return;
-  chipArea.innerHTML = '';
-  if (chatRound >= CHAT_TREE.length) {
-    chipArea.classList.add('done');
-    return;
-  }
-  const round = CHAT_TREE[chatRound];
-  round.chips.forEach((c, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'pc-btn';
-    btn.textContent = c.label;
-    btn.style.opacity = '0';
-    btn.style.transform = 'translateY(4px)';
-    btn.onclick = () => handlePhoneChipClick(c);
-    chipArea.appendChild(btn);
-    setTimeout(() => { btn.style.transition = 'all 0.25s ease'; btn.style.opacity = '1'; btn.style.transform = 'translateY(0)'; }, 80 * (i + 1));
-  });
-}
-
-function handlePhoneChipClick(chip) {
-  const box = document.getElementById('phoneMsgs');
-  const chipArea = document.getElementById('phoneChips');
-  if (!box || !chipArea) return;
-
-  // Hide chips immediately
-  chipArea.innerHTML = '';
-
-  // Add user message
-  addPhoneMsg(box, 'u', chip.label, false);
-
-  // Typing indicator
-  const typing = addPhoneTyping(box);
-
-  setTimeout(() => {
-    typing.remove();
-    addPhoneMsg(box, 'a', chip.reply, false);
-    box.scrollTop = box.scrollHeight;
-
-    chatRound++;
-
-    if (chatRound >= CHAT_TREE.length) {
-      // Final thank you message from AI
-      setTimeout(() => {
-        addPhoneMsg(box, 'a', 'Thanks for chatting with me! 💬 This conversation will be saved for your records.', false);
-        box.scrollTop = box.scrollHeight;
-        // System note
-        setTimeout(() => {
-          addPhoneMsg(box, 'sys', '— conversation saved —', false);
-          box.scrollTop = box.scrollHeight;
-          chipArea.classList.add('done');
-        }, 800);
-      }, 1200);
-    } else {
-      // Show next round of chips
-      setTimeout(() => renderPhoneChips(), 500);
-    }
-  }, 1000 + Math.random() * 400);
-}
 
 function startPhoneChat(){
   if(chatStarted) return;
   chatStarted=true;
-  initPhoneChatInteractive();
+  chatInterrupted = false;
+  const seq=[
+    {id:'pm1',t:400,vis:true},{id:'pt1',t:900,vis:true},{id:'pt1',t:2100,vis:false},
+    {id:'pm2',t:2200,vis:true},{id:'pm3',t:3500,vis:true},{id:'pt2',t:4000,vis:true},
+    {id:'pt2',t:5500,vis:false},{id:'pm4',t:5600,vis:true},{id:'pm5',t:7100,vis:true},
+    {id:'pt3',t:7600,vis:true},{id:'pt3',t:9300,vis:false},{id:'pm6',t:9400,vis:true}
+  ];
+  seq.forEach(s=>setTimeout(()=>{const el=document.getElementById(s.id);if(el) el.classList.toggle('vis',s.vis);},s.t));
+  chatTimers.forEach(clearTimeout);
+  chatTimers = [];
+  seq.forEach(s=>{
+    const t = setTimeout(()=>{
+      if (chatInterrupted) return;
+      const el=document.getElementById(s.id);
+      if(el) el.classList.toggle('vis',s.vis);
+    },s.t);
+    chatTimers.push(t);
+  });
 }
 function resetPhoneChat(){
   chatStarted=false;
   chatInterrupted = false;
-  chatRound = 0;
   chatTimers.forEach(clearTimeout);
   chatTimers = [];
-  const box = document.getElementById('phoneMsgs');
-  if (box) box.innerHTML = '';
-  const chipArea = document.getElementById('phoneChips');
-  if (chipArea) { chipArea.innerHTML = ''; chipArea.classList.remove('done'); }
+  ['pm1','pm2','pm3','pm4','pm5','pm6','pt1','pt2','pt3'].forEach(id=>{const el=document.getElementById(id);if(el) el.classList.remove('vis');});
   if(chatObserver) chatObserver.disconnect();
   const phone=document.querySelector('.phone-wrap');
   if(phone){
     chatObserver=new IntersectionObserver(entries=>{if(entries[0].isIntersecting){startPhoneChat();chatObserver.disconnect();}},{threshold:0.3});
     chatObserver.observe(phone);
   }
+}
+function triggerInteractiveLandingChat(userMsg, aiReply) {
+  chatInterrupted = true;
+  chatTimers.forEach(clearTimeout);
+  
+  const box = document.getElementById('phoneMsgs');
+  if (!box) return;
+
+  box.innerHTML = '';
+  box.innerHTML += `<div class="pmsg u vis" style="align-self: flex-end; background: var(--accent); color: var(--white); border-bottom-right-radius: 4px; opacity: 1; transform: translateY(0); max-width: 76%; padding: 7px 11px; border-radius: 14px; font-family: var(--fL); font-size: 10px; line-height: 1.45;">${userMsg}</div>`;
+  box.scrollTop = box.scrollHeight;
+
+  const typingId = 'ltyping-' + Date.now();
+  box.innerHTML += `
+    <div class="ptyping vis" id="${typingId}" style="display: flex; gap: 4px; align-items: center; padding: 9px 12px; background: rgba(255,255,255,0.07); border-radius: 14px; border-bottom-left-radius: 4px; align-self: flex-start; max-width: 58px;">
+      <div class="td" style="width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.38);"></div>
+      <div class="td" style="width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.38);"></div>
+      <div class="td" style="width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.38);"></div>
+    </div>`;
+  box.scrollTop = box.scrollHeight;
+
+  setTimeout(() => {
+    const typingEl = document.getElementById(typingId);
+    if (typingEl) typingEl.remove();
+
+    box.innerHTML += `<div class="pmsg a vis" style="align-self: flex-start; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border-bottom-left-radius: 4px; opacity: 1; transform: translateY(0); max-width: 76%; padding: 7px 11px; border-radius: 14px; font-family: var(--fL); font-size: 10px; line-height: 1.45;">${aiReply}</div>`;
+    box.scrollTop = box.scrollHeight;
+  }, 1200);
 }
 
 // ════════════════════ FEATURE CARD GLOW ════════════════════
@@ -1889,9 +1636,12 @@ function alreadyConsulted(){goPage('tiers');}
 // ════════════════════ PAYMENT PAGE ════════════════════
 let paySchedule='full';
 const TIER_INFO={
-  starter:{name:'Starter Plan',desc:'1–3 pages · AI Chat · 1–2 weeks',icon:'⚡',price:499},
-  pro:{name:'Pro Plan',desc:'Up to 6 pages · Premium design · 1–2 weeks',icon:'🚀',price:899},
-  premium:{name:'Premium Plan',desc:'Unlimited pages · All AI features · Priority 2–7 days',icon:'👑',price:1499}
+  starter:{name:'Starter Plan',desc:'1–3 pages · AI Chat · 7 days',icon:'⚡',price:499},
+  pro:{name:'Pro Plan',desc:'Up to 6 pages · Premium design · 10 days',icon:'🚀',price:899},
+  premium:{name:'Premium Plan',desc:'Unlimited pages · All AI features · 7 days',icon:'👑',price:1499}
+  starter:{name:'Starter Plan',desc:'1–3 pages · AI Chat · 1-2 weeks',icon:'⚡',price:499},
+  pro:{name:'Pro Plan',desc:'Up to 6 pages · Premium design · 2-3 weeks',icon:'🚀',price:899},
+  premium:{name:'Premium Plan',desc:'Unlimited pages · All AI features · 2-3 weeks',icon:'👑',price:1499}
 };
 function buildPaymentPage(){
   const info=TIER_INFO[S.tier];
